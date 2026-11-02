@@ -1,0 +1,40 @@
+# Ambiente virtual e arquivos Python gerados
+.venv/
+__pycache__/
+*.py[cod]
+
+# Credenciais e configuracoes locais
+.env
+.env.*
+!.env.example
+.gestati.local.json
+.gestati.local.json.tmp
+
+# Arquivos locais de desenvolvimento
+*.log
+.pytest_cache/
+.coverage
+htmlcov/
+staticfiles/
+
+# Banco, backups e uploads locais
+*.sqlite3
+*.sqlite3-journal
+*.dump
+*.backup
+backups/
+media/
+
+# Fontes acadêmicas/telas internas e evidências locais de revisão
+# Permanecem no computador; não são necessários para executar o código.
+referencias/
+evidencias/
+
+# Documentação de trabalho permanece local. Publicar só o guia de instalação.
+*.md
+*.MD
+!/README.md
+
+# Arquivos do sistema operacional
+Thumbs.db
+.DS_Store

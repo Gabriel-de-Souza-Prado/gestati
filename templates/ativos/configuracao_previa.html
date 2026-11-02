@@ -1,0 +1,10 @@
+{% extends 'base.html' %}{% load static recursos %}
+{% block title %}Conferir alteração · {{ ativo.dti }} | GESTATI{% endblock %}
+{% block extra_head %}<link rel="stylesheet" href="{% recurso 'css/ativos.css' %}">{% endblock %}
+{% block content %}
+<header class="page-header"><div><p class="eyebrow">Identificação {{ ativo.dti }} · PRÉVIA</p><h1>Confira antes de confirmar</h1><p>{{ ativo.descricao }}</p></div></header>
+<p class="notice notice-warning">A alteração ainda não foi gravada. Confira a configuração e todos os efeitos no estoque.</p>
+<section class="panel asset-section"><h2>{% if tipo == 'correcao' %}Correção de cadastro{% else %}Troca/upgrade físico sem OS{% endif %}</h2><p><strong>Justificativa:</strong> {{ justificativa }}</p><div class="config-preview"><div><h3>Antes</h3>{% for linha in previa.antes %}<p>{{ linha.quantidade }} × {{ linha.nome }}</p>{% empty %}<p>Sem componentes.</p>{% endfor %}</div><div><h3>Depois</h3>{% for linha in previa.depois %}<p>{{ linha.quantidade }} × {{ linha.nome }}</p>{% empty %}<p>Sem componentes.</p>{% endfor %}</div></div></section>
+<section class="panel asset-section"><h2>Movimentações de estoque</h2>{% for efeito in previa.movimentos %}<p><strong>{% if efeito.tipo == 'entrada' %}Entrada{% else %}Saída{% endif %}: {{ efeito.quantidade }} × {{ efeito.nome }}</strong>{% if efeito.origem == 'correcao' %}<br>Compensação de lançamento cadastral. Não representa devolução física de peça.{% endif %}</p>{% empty %}<p>Nenhuma movimentação. A correção altera somente a configuração registrada.</p>{% endfor %}<h3>Saldos antes e depois</h3>{% for linha in previa.saldos %}<p>{{ linha.nome }}: <strong>{{ linha.antes }} → {{ linha.depois }}</strong></p>{% endfor %}</section>
+<form method="post">{% csrf_token %}<input type="hidden" name="confirmacao" value="{{ token }}"><div class="form-actions"><button type="submit" class="button button-primary">Confirmar alteração</button><a href="{% url 'ativos:configuracao_alterar' ativo.pk %}" class="button button-secondary">Refazer prévia</a><a href="{% url 'ativos:ativo_detalhar' ativo.pk %}" class="button button-cancel">Cancelar</a></div></form>
+{% endblock %}

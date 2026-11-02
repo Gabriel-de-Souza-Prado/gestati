@@ -1,0 +1,29 @@
+/* Navegação compartilhada; não altera os estilos dos formulários e tabelas. */
+.topbar{min-height:72px;padding:14px clamp(20px,3vw,56px);gap:20px;position:relative;z-index:20}
+.brand-area{gap:32px;min-width:0;flex:1}
+.brand{font-size:20px;white-space:nowrap;letter-spacing:.07em;gap:10px}
+.brand-symbol{width:40px;height:40px;display:block;flex:none}
+.primary-nav{gap:4px;flex-wrap:nowrap}
+.primary-nav>a,.nav-dropdown>summary{font-size:14px;font-weight:600;color:var(--muted);padding:9px 12px;border-radius:7px;white-space:nowrap;text-decoration:none}
+.primary-nav>a:hover,.nav-dropdown>summary:hover,.nav-dropdown[open]>summary{background:#edf5f4;color:var(--teal)}
+.nav-dropdown{position:relative}
+.nav-dropdown>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:9px}
+.nav-dropdown>summary::-webkit-details-marker{display:none}
+.nav-dropdown>summary::after{content:"";width:6px;height:6px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg);margin-top:-3px}
+.nav-dropdown[open]>summary::after{transform:rotate(225deg);margin-top:3px}
+.nav-popover{position:absolute;left:0;top:calc(100% + 9px);width:236px;padding:7px;background:white;border:1px solid var(--line);border-radius:12px;box-shadow:0 12px 32px #17304219;z-index:30}
+.nav-popover a{display:block;padding:10px 12px;border-radius:6px;font-size:14px;color:var(--ink);text-decoration:none}
+.nav-popover a:hover{background:#edf5f4;color:var(--teal)}
+.account-menu{flex:none}
+.account-menu>summary{width:42px;height:42px;justify-content:center;padding:0;border:1px solid var(--line);border-radius:50%;color:var(--ink)}
+.account-menu>summary::after{display:none}
+.account-menu svg{width:23px;height:23px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.account-menu .nav-popover{right:0;left:auto;width:260px}
+.account-identity{padding:10px 12px 13px;border-bottom:1px solid var(--line);margin-bottom:6px;overflow-wrap:anywhere}
+.account-identity strong{display:block;font-size:15px}.account-identity span{display:block;font-size:13px;color:var(--muted);margin-top:2px}
+.account-menu form{margin:0}.account-menu button{border:0;background:none;color:#9a3041;display:block;text-align:left;width:100%;padding:10px 12px;border-radius:6px;font:inherit;font-size:14px;cursor:pointer}.account-menu button:hover{background:#fceff1}
+.navigation-toggle{display:none;border:1px solid var(--line);background:white;border-radius:7px;padding:8px 12px;font:inherit;font-size:14px;color:var(--ink);cursor:pointer}
+summary:focus-visible{outline:3px solid #e9b44c;outline-offset:3px}
+@media(max-width:1100px){.brand-area{gap:16px}.primary-nav>a,.nav-dropdown>summary{padding-inline:9px}.topbar{padding-inline:24px}}
+@media(max-width:940px){.topbar{gap:12px;align-items:flex-start;flex-wrap:nowrap;padding:12px 20px}.brand-area{flex-wrap:wrap;gap:12px;justify-content:space-between}.brand{margin-right:auto}.navigation-ready .navigation-toggle{display:block}.primary-nav{flex-basis:100%;flex-wrap:wrap;gap:4px}.navigation-ready .primary-nav{display:none}.navigation-ready .primary-nav.is-open{display:flex}.primary-nav .nav-popover{position:static;box-shadow:none;min-width:190px;width:auto;margin:6px 0}.account-menu .nav-popover{position:absolute;right:0;left:auto}.primary-nav .nav-dropdown{flex:1 1 155px}.primary-nav>a{align-self:flex-start}.nav-dropdown>summary{min-height:40px}.account-menu>summary{min-height:42px}}
+@media(prefers-reduced-motion:no-preference){.primary-nav>a,.nav-dropdown>summary,.nav-popover a{transition:background-color .15s,color .15s}}

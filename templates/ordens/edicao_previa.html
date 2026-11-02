@@ -1,0 +1,11 @@
+{% extends 'base.html' %}{% load static recursos %}
+{% block title %}Conferir edição · OS {{ ordem.pk }} | GESTATI{% endblock %}
+{% block extra_head %}<link rel="stylesheet" href="{% recurso 'css/ativos.css' %}">{% endblock %}
+{% block content %}
+<header class="page-header"><div><p class="eyebrow">OS {{ ordem.pk }} · SERVIÇO {{ registro.pk }}</p><h1>Conferir edição do serviço</h1><p class="muted">Identificação {{ ordem.dti_ativo }} · {{ ordem.nome_ativo }}</p></div></header>
+<p class="notice notice-warning">Nenhuma alteração foi gravada ainda. A edição ajustará somente as diferenças necessárias, sem consumir novamente peças já lançadas.</p>
+<section class="panel asset-section"><h2>Serviço corrigido</h2><p class="long-title">{{ descricao|linebreaksbr }}</p><h3>Motivo da edição</h3><p class="long-title">{{ justificativa|linebreaksbr }}</p></section>
+<section class="panel asset-section"><h2>Configuração antes e depois</h2><div class="asset-grid"><div><h3>Antes</h3>{% for l in previa.antes %}<p>{{ l.quantidade }} × {{ l.nome }}</p>{% empty %}<p>Sem componentes.</p>{% endfor %}</div><div><h3>Depois</h3>{% for l in previa.depois %}<p>{{ l.quantidade }} × {{ l.nome }}</p>{% empty %}<p>Sem componentes.</p>{% endfor %}</div></div></section>
+<section class="panel data-panel asset-section"><div class="list-summary"><h2>Ajustes no estoque</h2></div><div class="table-wrap"><table class="data-table"><thead><tr><th scope="col">Componente</th><th scope="col">Ajuste</th><th scope="col">Saldo antes → depois</th></tr></thead><tbody>{% for l in previa.efeitos %}<tr><th scope="row">{{ l.nome }}</th><td>{% if l.tipo == 'entrada' %}+{% else %}−{% endif %}{{ l.quantidade }}</td><td>{{ l.antes }} → {{ l.depois }}</td></tr>{% empty %}<tr><td colspan="3" class="empty-state">Esta edição não altera o estoque. As peças já consumidas não serão consumidas novamente.</td></tr>{% endfor %}</tbody></table></div></section>
+<form method="post">{% csrf_token %}<input type="hidden" name="confirmacao" value="{{ token }}"><div class="form-actions"><button class="button button-primary" type="submit">Confirmar edição do serviço</button><a href="{% url 'ordens:servico_editar' ordem.pk registro.pk %}" class="button button-secondary">Voltar e ajustar</a></div></form>
+{% endblock %}

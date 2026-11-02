@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %}Estoque de componentes | GESTATI{% endblock %}
+{% block content %}
+{% include 'includes/module_context.html' with grupo="ESTOQUE" %}
+<header class="page-header">
+    <div><h1>Estoque de componentes</h1></div>
+    <div class="header-actions"><a class="button button-secondary" href="{% url 'estoque:entrada_criar' %}">Registrar entrada</a><a class="button button-primary button-fit" href="{% url 'estoque:componente_criar' %}">+ Novo componente</a></div>
+</header>
+<section class="panel data-panel" aria-label="Consulta de componentes">
+    <form class="filters stock-filters" method="get">
+        {% for field in filtro %}<div class="field {% if field.name == 'q' %}filter-search{% endif %}"><label for="{{ field.id_for_label }}">{{ field.label }}</label>{{ field }}{% if field.errors %}<div class="form-errors" role="alert">{{ field.errors }}</div>{% endif %}</div>{% endfor %}
+        <div class="filter-actions"><button class="button button-secondary" type="submit">Buscar</button><a href="{% url 'estoque:componente_listar' %}">Limpar</a></div>
+    </form>
+    <div class="list-summary"><strong>{{ page_obj.paginator.count }}</strong> componente{{ page_obj.paginator.count|pluralize:"s" }} encontrado{{ page_obj.paginator.count|pluralize:"s" }}</div>
+    <div class="table-wrap">
+        <table class="data-table">
+            <caption class="sr-only">Componentes, saldo de estoque e situação</caption>
+            <thead><tr><th scope="col">Componente</th><th scope="col">Tipo / capacidade</th><th scope="col">Disponível</th><th scope="col">Mínimo</th><th scope="col">Situação</th><th scope="col" class="actions-heading">Ações</th></tr></thead>
+            <tbody>{% for componente in page_obj %}
+            <tr>
+                <th scope="row"><a class="record-name" href="{% url 'estoque:componente_detalhar' componente.pk %}">{{ componente.nome }}</a></th>
+                <td>{{ componente.get_tipo_display }}{% if componente.capacidade %}<span class="contact-line muted">{{ componente.capacidade_formatada }} por unidade</span>{% endif %}</td>
+                <td><strong class="stock-count">{{ componente.saldo }}</strong>{% if componente.estoque_baixo %}<span class="contact-line stock-alert">No mínimo ou abaixo</span>{% endif %}</td>
+                <td>{{ componente.quantidade_minima }}</td>
+                <td><span class="status-pill {% if componente.ativo %}status-active{% else %}status-inactive{% endif %}">{% if componente.ativo %}Ativo{% else %}Inativo{% endif %}</span></td>
+                <td class="actions-heading"><a href="{% url 'estoque:componente_detalhar' componente.pk %}">Consultar<span class="sr-only"> {{ componente.nome }}</span></a></td>
+            </tr>
+            {% empty %}<tr><td class="empty-state" colspan="6"><strong>Nenhum componente encontrado.</strong><p>Revise os filtros ou cadastre um componente para começar.</p></td></tr>{% endfor %}</tbody>
+        </table>
+    </div>
+    {% include 'estoque/_paginacao.html' %}
+</section>
+{% endblock %}

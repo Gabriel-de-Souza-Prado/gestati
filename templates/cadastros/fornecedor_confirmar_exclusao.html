@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}Excluir fornecedor | GESTATI{% endblock %}
+{% block content %}
+<a class="back-link" href="{% url 'cadastros:fornecedor_listar' %}">← Voltar</a>
+<header class="page-header"><div><p class="eyebrow">CADASTROS</p><h1>Excluir fornecedor</h1></div></header>
+<section class="panel form-panel">
+    <h2>{{ fornecedor.nome }}</h2>
+    {% if fornecedor.cnpj %}<p class="muted">CNPJ: {{ fornecedor.cnpj_formatado }}</p>{% endif %}
+    <p>Deseja excluir este cadastro? A exclusão só é permitida quando o fornecedor não possui registros vinculados.</p>
+    <p class="muted">Para deixar de usá-lo preservando as informações, escolha inativar na lista de fornecedores.</p>
+    <form method="post" class="form-actions">
+        {% csrf_token %}<button class="button button-danger" type="submit">Excluir fornecedor</button><a href="{% url 'cadastros:fornecedor_listar' %}" class="button button-cancel">Cancelar</a>
+    </form>
+</section>
+{% endblock %}

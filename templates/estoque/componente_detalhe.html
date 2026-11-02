@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}{{ componente.nome }} | GESTATI{% endblock %}
+{% block content %}
+<a class="back-link" href="{% url 'estoque:componente_listar' %}">← Voltar</a>
+<header class="page-header">
+    <div><p class="eyebrow">ESTOQUE</p><h1 class="long-title">{{ componente.nome }}</h1><p class="muted">{{ componente.get_tipo_display }}{% if componente.capacidade %} · {{ componente.capacidade_formatada }} por unidade{% endif %}</p></div>
+    <div class="header-actions">{% if componente.ativo %}<a class="button button-primary button-fit" href="{% url 'estoque:entrada_criar' %}?componente={{ componente.pk }}">Registrar entrada</a>{% endif %}<a class="button button-secondary" href="{% url 'estoque:componente_editar' componente.pk %}">Editar</a></div>
+</header>
+<section class="panel stock-summary" aria-label="Situação do estoque">
+    <div><span class="eyebrow">DISPONÍVEL</span><strong class="balance-number">{{ componente.saldo }}</strong><span class="muted">unidade{{ componente.saldo|pluralize:"s" }}</span></div>
+    <div><p>Estoque mínimo: <strong>{{ componente.quantidade_minima }}</strong></p>{% if componente.estoque_baixo %}<span class="status-pill status-low">No mínimo ou abaixo</span>{% endif %}<p><span class="status-pill {% if componente.ativo %}status-active{% else %}status-inactive{% endif %}">{% if componente.ativo %}Componente ativo{% else %}Componente inativo{% endif %}</span></p></div>
+    <div class="row-actions">
+        <form method="post" action="{% url 'estoque:componente_situacao' componente.pk %}">{% csrf_token %}<input type="hidden" name="ativo" value="{% if componente.ativo %}0{% else %}1{% endif %}"><button class="text-button" type="submit">{% if componente.ativo %}Inativar{% else %}Ativar{% endif %} componente</button></form>
+        <a class="danger-link" href="{% url 'estoque:componente_excluir' componente.pk %}">Excluir</a>
+    </div>
+    {% if componente.descricao %}<div class="stock-description"><h2>Descrição</h2><div class="muted">{{ componente.descricao|linebreaksbr }}</div></div>{% endif %}
+</section>
+<section class="panel data-panel" aria-labelledby="historico-title">
+    <div class="list-summary"><h2 id="historico-title" class="section-title">Histórico de movimentações</h2><p class="muted">Entradas, aplicações, retornos e responsáveis registrados para este componente.</p></div>
+    <form class="filters stock-filters" method="get">{% include 'estoque/_campos_form.html' with form=filtro %}<div class="filter-actions"><button class="button button-secondary" type="submit">Filtrar</button><a href="{% url 'estoque:componente_detalhar' componente.pk %}">Limpar</a></div></form>
+    <div class="list-summary">{{ page_obj.paginator.count }} movimentaç{{ page_obj.paginator.count|pluralize:"ão,ões" }} encontrada{{ page_obj.paginator.count|pluralize:"s" }}</div>
+    <div class="table-wrap"><table class="data-table movement-table">
+        <caption class="sr-only">Movimentações do componente e dados do recebimento</caption>
+        <thead><tr><th scope="col">Data</th><th scope="col">Quantidade</th><th scope="col">Origem / fornecedor</th><th scope="col">Registro</th></tr></thead>
+        <tbody>{% for movimento in page_obj %}
+        <tr><td class="identifier">{{ movimento.data|date:"d/m/Y" }}<span class="contact-line muted">{{ movimento.get_tipo_display }}</span></td><td><strong>{% if movimento.tipo == 'entrada' %}+{% else %}−{% endif %}{{ movimento.quantidade }}</strong></td><td>{{ movimento.get_origem_display }}{% if movimento.tipo == 'entrada' %}<span class="contact-line muted">{{ movimento.nome_fornecedor|default:"Sem fornecedor informado" }}</span>{% endif %}{% if movimento.intervencao %}<span class="contact-line"><a href="{% url 'ativos:ativo_detalhar' movimento.intervencao.ativo_id %}">Ativo Identificação {{ movimento.intervencao.dti_ativo }}</a></span>{% endif %}{% if movimento.intervencao.revisao_os_id %}<span class="contact-line"><a href="{% url 'ordens:detalhar' movimento.intervencao.revisao_os.registro.ordem_id %}">Edição do serviço {{ movimento.intervencao.revisao_os.registro_id }} · OS {{ movimento.intervencao.revisao_os.registro.ordem_id }}</a></span>{% endif %}{% if movimento.intervencao.baixa_id %}<span class="contact-line"><a href="{% url 'baixas:detalhar' movimento.intervencao.baixa_id %}">Baixa {{ movimento.intervencao.baixa_id }}</a></span>{% endif %}{% if movimento.intervencao.registro_os_id %}<span class="contact-line"><a href="{% url 'ordens:detalhar' movimento.intervencao.registro_os.ordem_id %}">OS {{ movimento.intervencao.registro_os.ordem_id }}</a></span>{% endif %}{% if movimento.observacao %}<p class="movement-note">{{ movimento.observacao|linebreaksbr }}</p>{% endif %}</td><td>{{ movimento.nome_tecnico }}<span class="contact-line muted">Registrado em {{ movimento.registrado_em|date:"d/m/Y H:i" }}</span><span class="contact-line muted">{{ movimento.nome_componente }}</span></td></tr>
+        {% empty %}<tr><td class="empty-state" colspan="4"><strong>Nenhuma movimentação encontrada.</strong><p>Revise os filtros ou registre uma entrada de peças recebidas.</p></td></tr>{% endfor %}</tbody>
+    </table></div>
+    {% include 'estoque/_paginacao.html' %}
+</section>
+{% endblock %}

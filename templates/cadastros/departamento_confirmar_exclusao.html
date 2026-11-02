@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}Excluir departamento | GESTATI{% endblock %}
+{% block content %}
+<a class="back-link" href="{% url 'cadastros:departamento_listar' %}">← Voltar</a>
+<header class="page-header"><div><p class="eyebrow">CADASTROS</p><h1>Excluir departamento</h1></div></header>
+<section class="panel form-panel">
+    <h2>{{ departamento.nome }}</h2>
+    {% if departamento.sigla %}<p class="muted">Sigla: {{ departamento.sigla }}</p>{% endif %}
+    <p>Deseja excluir este cadastro? A exclusão só é permitida quando o departamento não possui registros vinculados.</p>
+    <p class="muted">Para deixar de usá-lo preservando as informações, escolha inativar na lista de departamentos.</p>
+    <form method="post" class="form-actions">
+        {% csrf_token %}<button class="button button-danger" type="submit">Excluir departamento</button><a href="{% url 'cadastros:departamento_listar' %}" class="button button-cancel">Cancelar</a>
+    </form>
+</section>
+{% endblock %}

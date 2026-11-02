@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% block title %}Relatórios | GESTATI{% endblock %}
+{% block content %}
+{% include 'includes/module_context.html' with grupo="CONSULTA E IMPRESSÃO" %}
+<header class="page-header"><div><h1>Relatórios</h1><p class="muted">Escolha um relatório, ajuste os filtros e consulte os resultados antes de gerar o PDF.</p></div></header>
+<section class="home-links" aria-label="Relatórios disponíveis">{% for tipo, definicao in relatorios.items %}<a class="module-card" href="{% url 'relatorios:consultar' tipo %}"><h2>{{ definicao.titulo }} <span aria-hidden="true">→</span></h2><p>{{ definicao.descricao }}</p></a>{% endfor %}</section>
+<p class="help-text">Os documentos individuais de OS, transferência e baixa continuam disponíveis nas respectivas fichas.</p>
+{% endblock %}

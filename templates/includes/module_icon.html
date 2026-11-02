@@ -1,0 +1,11 @@
+<svg viewBox="0 0 24 24" aria-hidden="true">
+{% if icon == 'computer' %}<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 21h8M12 16v5"/>
+{% elif icon == 'transfer' %}<path d="M3 7h17m-4-4 4 4-4 4M21 17H4m4-4-4 4 4 4"/>
+{% elif icon == 'archive' %}<rect x="3" y="4" width="18" height="4" rx="1"/><path d="M5 8v12h14V8M9 12h6m-3 0v5m-2-2 2 2 2-2"/>
+{% elif icon == 'service' %}<rect x="5" y="4" width="14" height="17" rx="2"/><rect x="9" y="2" width="6" height="4" rx="1"/><path d="m9 13 2 2 4-4M9 18h6"/>
+{% elif icon == 'component' %}<path d="m12 3 9 5-9 5-9-5 9-5ZM3 8v9l9 5 9-5V8M12 13v9M7 5.8l9 5"/>
+{% elif icon == 'category' %}<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>
+{% elif icon == 'department' %}<path d="M5 21V3h14v18M3 21h18M9 7h1m4 0h1M9 11h1m4 0h1M10 21v-5h4v5"/>
+{% elif icon == 'supplier' %}<path d="M3 6h11v12H3zM14 10h4l3 4v4h-7M3 10h6"/><circle cx="7" cy="19" r="2"/><circle cx="18" cy="19" r="2"/>
+{% else %}<path d="M5 3h10l4 4v14H5zM14 3v5h5M9 17v-3m3 3v-6m3 6v-4"/>{% endif %}
+</svg>

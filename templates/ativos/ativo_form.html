@@ -1,0 +1,46 @@
+{% extends 'base.html' %}{% load static recursos %}
+{% block title %}{% if ativo %}Editar{% else %}Novo{% endif %} ativo | GESTATI{% endblock %}
+{% block extra_head %}<link rel="stylesheet" href="{% recurso 'css/ativos.css' %}">{% endblock %}
+{% block content %}
+<a class="back-link" href="{% url 'ativos:ativo_listar' %}">← Voltar</a>
+<header class="page-header"><div><p class="eyebrow">EQUIPAMENTOS</p><h1>{% if ativo %}Editar{% else %}Novo{% endif %} ativo</h1></div></header>
+<form method="post" id="ativo-form" data-catalogo-url="{% url 'ativos:catalogo_componentes' %}" data-especificacao-url="{% url 'ativos:especificacao_criar' %}">
+    {% csrf_token %}{{ form.chave_confirmacao }}{{ form.versao }}
+    {% if form.non_field_errors %}<div class="form-errors panel" role="alert">{{ form.non_field_errors }}</div>{% endif %}
+    {% if form.chave_confirmacao.errors %}<div class="form-errors" role="alert">{{ form.chave_confirmacao.errors }}</div>{% endif %}
+    {% if form.versao.errors %}<div class="form-errors" role="alert">{{ form.versao.errors }}</div>{% endif %}
+    <section class="panel asset-section" aria-labelledby="identificacao-title"><h2 id="identificacao-title">Identificação e vínculo</h2>
+        <div class="asset-grid">
+            {% include 'ativos/_campo.html' with field=form.dti %}
+            {% include 'ativos/_campo.html' with field=form.patrimonio %}
+            {% include 'ativos/_campo.html' with field=form.numero_serie %}
+            {% include 'ativos/_campo.html' with field=form.modelo %}
+            {% include 'ativos/_campo.html' with field=form.categoria %}
+            {% include 'ativos/_campo.html' with field=form.departamento %}
+            {% include 'ativos/_campo.html' with field=form.situacao %}
+        </div>
+    </section>
+    <section class="panel asset-section" id="rede-section" hidden><h2>Nome na rede e sistema operacional</h2>
+        {% for grupo in perfis %}<fieldset class="profile-fields" data-profile="{{ grupo.codigo }}" {% if not grupo.selecionado %}hidden disabled{% endif %}><legend>{{ grupo.rotulo }}</legend>{% for field in grupo.form %}{% include 'ativos/_campo.html' %}{% endfor %}</fieldset>{% endfor %}
+    </section>
+    {% if not ativo %}
+    <section class="panel asset-section" id="composicao-section" hidden aria-labelledby="composicao-title"><h2 id="composicao-title">Componentes instalados</h2><p class="muted">Preencha a configuração completa.</p>
+        <details class="quick-spec"><summary>+ Cadastrar uma especificação sem sair desta tela</summary><p class="help-text">Cadastre uma peça que já está no equipamento, sem entrada no estoque.</p><div class="asset-grid">{% for field in nova_especificacao %}{% include 'ativos/_campo.html' %}{% endfor %}</div><button class="button button-secondary" id="criar-especificacao" type="button">Salvar especificação no catálogo</button><p id="nova-mensagem" role="status"></p></details>
+        {% if legado %}<div class="form-errors">Revise a composição no formulário atualizado.</div>{{ legado.management_form }}{{ legado.non_form_errors }}{% endif %}
+        <div id="pecas-rows">{% for grupo in grupos_composicao %}<section class="composition-group" data-group="{{ grupo.codigo }}" data-tipos="{{ grupo.tipos|join:',' }}"><h3>{{ grupo.titulo }}</h3>{{ grupo.formset.management_form }}{{ grupo.formset.non_form_errors }}<div id="linhas-{{ grupo.codigo }}">{% for linha in grupo.formset %}{% include 'ativos/_linha_peca.html' %}{% endfor %}</div><button class="button button-secondary" type="button" data-adicionar="{{ grupo.codigo }}">+ Adicionar linha de {{ grupo.titulo|lower }}</button><template id="vazio-{{ grupo.codigo }}">{% include 'ativos/_linha_peca.html' with linha=grupo.formset.empty_form %}</template></section>{% endfor %}</div>
+    </section>
+    {% elif computador %}<p class="notice">Para peças instaladas, use <a href="{% url 'ativos:configuracao_alterar' ativo.pk %}">Alterar configuração</a>. </p>{% endif %}
+    <section class="panel asset-section" aria-labelledby="compra-title"><h2 id="compra-title">Compra e garantia</h2><div class="asset-grid">
+        {% include 'ativos/_campo.html' with field=form.fornecedor %}
+        {% include 'ativos/_campo.html' with field=form.data_aquisicao %}
+        {% include 'ativos/_campo.html' with field=form.valor_aquisicao %}
+        {% include 'ativos/_campo.html' with field=form.garantia %}
+        <fieldset class="warranty-period" id="garantia-datas" {% if form.garantia.value != 'com_garantia' %}hidden disabled{% endif %}><legend>Período da garantia</legend><div class="asset-grid">
+            {% include 'ativos/_campo.html' with field=form.inicio_garantia %}
+            {% include 'ativos/_campo.html' with field=form.fim_garantia %}
+        </div></fieldset>
+    </div>{% include 'ativos/_campo.html' with field=form.observacoes %}</section>
+    <div class="form-actions"><button class="button button-primary button-fit" type="submit">{% if ativo %}Salvar alterações{% else %}Confirmar cadastro{% endif %}</button><a href="{% url 'ativos:ativo_listar' %}" class="button button-cancel">Cancelar</a></div>
+</form>
+{% endblock %}
+{% block scripts %}<script src="{% recurso 'js/ativos.js' %}" defer></script>{% endblock %}

@@ -1,0 +1,4 @@
+# Dependencias diretas do GESTATI. Versoes exatas serao registradas apos instalar.
+Django>=5.2.8,<5.3
+psycopg[binary]>=3.3,<3.4
+reportlab>=4.4,<5

@@ -1,0 +1,13 @@
+{% extends 'base.html' %}{% load static recursos %}
+{% block title %}Editar serviço · OS {{ ordem.pk }} | GESTATI{% endblock %}
+{% block extra_head %}<link rel="stylesheet" href="{% recurso 'css/ativos.css' %}"><link rel="stylesheet" href="{% recurso 'css/ordens.css' %}">{% endblock %}
+{% block content %}
+<a class="back-link" href="{% url 'ordens:detalhar' ordem.pk %}">← Voltar</a>
+<header class="page-header"><div><p class="eyebrow">OS {{ ordem.pk }} · SERVIÇO {{ registro.pk }}</p><h1>Editar serviço e peças</h1><p class="muted">{{ ordem.nome_ativo }} · Identificação {{ ordem.dti_ativo }}</p></div></header>
+<form method="post" class="panel">{% csrf_token %}{{ form.non_field_errors }}{% for field in form %}{% if field.is_hidden %}{{ field }}{{ field.errors }}{% else %}<div class="field"><label for="{{ field.id_for_label }}">{{ field.label }}</label>{{ field }}{{ field.errors }}</div>{% endif %}{% endfor %}
+<section><h2>Peças utilizadas ou retiradas neste serviço</h2><p class="help-text">Informe todas as peças deste serviço, incluindo as retiradas.</p>
+<details class="os-current"><summary>Consultar peças instaladas</summary>{% for linha in instalados %}<p>{{ linha.quantidade }} × {{ linha.componente.nome }}</p>{% endfor %}</details>
+{{ pecas.management_form }}{{ pecas.non_form_errors }}<div id="os-pecas">{% for linha in pecas %}{% include 'ordens/_peca.html' %}{% endfor %}</div><template id="os-peca-vazia">{% include 'ordens/_peca.html' with linha=pecas.empty_form %}</template><button class="button button-secondary" id="os-adicionar-peca" type="button">+ Adicionar peça</button></section>
+<div class="form-actions"><button type="submit" class="button button-primary">Conferir edição</button><a href="{% url 'ordens:detalhar' ordem.pk %}" class="button button-cancel">Cancelar</a></div></form>
+{% endblock %}
+{% block scripts %}<script src="{% recurso 'js/ordens.js' %}" defer></script>{% endblock %}

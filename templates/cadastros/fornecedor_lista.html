@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block title %}Fornecedores | GESTATI{% endblock %}
+{% block content %}
+{% include 'includes/module_context.html' with grupo="CADASTROS" %}
+<header class="page-header">
+    <div><h1>Fornecedores</h1><p class="muted">Consulte os fornecedores de equipamentos e componentes.</p></div>
+    <a class="button button-primary button-fit" href="{% url 'cadastros:fornecedor_criar' %}">+ Novo fornecedor</a>
+</header>
+<section class="panel data-panel" aria-label="Consulta de fornecedores">
+    <form class="filters" method="get">
+        {% for field in filtro %}
+        <div class="field {% if field.name == 'q' %}filter-search{% endif %}">
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>{{ field }}
+            {% if field.errors %}<div class="form-errors" role="alert">{{ field.errors }}</div>{% endif %}
+        </div>
+        {% endfor %}
+        <div class="filter-actions"><button class="button button-secondary" type="submit">Buscar</button><a href="{% url 'cadastros:fornecedor_listar' %}">Limpar</a></div>
+    </form>
+    <div class="list-summary"><strong>{{ page_obj.paginator.count }}</strong> fornecedor{{ page_obj.paginator.count|pluralize:",es" }} encontrado{{ page_obj.paginator.count|pluralize:"s" }}</div>
+    <div class="table-wrap">
+        <table class="data-table">
+            <caption class="sr-only">Fornecedores cadastrados e ações disponíveis</caption>
+            <thead><tr><th scope="col">Fornecedor</th><th scope="col">CNPJ</th><th scope="col">Contato</th><th scope="col">Situação</th><th scope="col" class="actions-heading">Ações</th></tr></thead>
+            <tbody>
+            {% for fornecedor in page_obj %}
+            <tr>
+                <th scope="row"><a class="record-name" href="{% url 'cadastros:fornecedor_editar' fornecedor.pk %}">{{ fornecedor.nome }}</a></th>
+                <td class="identifier">{{ fornecedor.cnpj_formatado|default:"—" }}</td><td>{% if fornecedor.telefone %}<span class="contact-line">{{ fornecedor.telefone }}</span>{% endif %}{% if fornecedor.email %}<span class="contact-line">{{ fornecedor.email }}</span>{% endif %}{% if not fornecedor.telefone and not fornecedor.email %}—{% endif %}</td>
+                <td><span class="status-pill {% if fornecedor.ativo %}status-active{% else %}status-inactive{% endif %}">{% if fornecedor.ativo %}Ativo{% else %}Inativo{% endif %}</span></td>
+                <td><div class="row-actions">
+                    <a href="{% url 'cadastros:fornecedor_editar' fornecedor.pk %}">Editar<span class="sr-only"> {{ fornecedor.nome }}</span></a>
+                    <form method="post" action="{% url 'cadastros:fornecedor_situacao' fornecedor.pk %}">
+                        {% csrf_token %}<input type="hidden" name="ativo" value="{% if fornecedor.ativo %}0{% else %}1{% endif %}">
+                        <button class="text-button" type="submit">{% if fornecedor.ativo %}Inativar{% else %}Ativar{% endif %}<span class="sr-only"> {{ fornecedor.nome }}</span></button>
+                    </form>
+                    <a class="danger-link" href="{% url 'cadastros:fornecedor_excluir' fornecedor.pk %}">Excluir<span class="sr-only"> {{ fornecedor.nome }}</span></a>
+                </div></td>
+            </tr>
+            {% empty %}
+            <tr><td class="empty-state" colspan="5"><strong>Nenhum fornecedor encontrado.</strong><p>Revise os filtros ou cadastre um novo fornecedor.</p></td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% include 'estoque/_paginacao.html' %}
+</section>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %}Excluir categoria | GESTATI{% endblock %}
+{% block content %}
+<a class="back-link" href="{% url 'cadastros:categoria_listar' %}">← Voltar</a>
+<header class="page-header"><div><p class="eyebrow">CADASTROS</p><h1>Excluir categoria</h1></div></header>
+<section class="panel form-panel">
+    <h2>{{ categoria.nome }}</h2>
+    <p>Deseja excluir este cadastro? A exclusão só é permitida quando a categoria não possui registros vinculados.</p>
+    <p class="muted">Para deixar de usá-la preservando as informações, escolha inativar na lista de categorias.</p>
+    <form method="post" class="form-actions">
+        {% csrf_token %}<button class="button button-danger" type="submit">Excluir categoria</button><a href="{% url 'cadastros:categoria_listar' %}" class="button button-cancel">Cancelar</a>
+    </form>
+</section>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}Registrar entrada | GESTATI{% endblock %}
+{% block content %}
+<a class="back-link" href="{% url 'estoque:componente_listar' %}">← Voltar</a>
+<header class="page-header"><div><p class="eyebrow">ESTOQUE</p><h1>Registrar entrada</h1><p class="muted">Registre as peças recebidas para acrescentá-las ao saldo disponível.</p></div></header>
+{% if tem_componentes %}
+<section class="panel form-panel" aria-label="Dados da entrada">
+    <form method="post">{% csrf_token %}{% include 'estoque/_campos_form.html' %}
+        <div class="form-actions"><button class="button button-primary button-fit" type="submit">Confirmar entrada</button><a href="{% url 'estoque:componente_listar' %}" class="button button-cancel">Cancelar</a></div>
+    </form>
+</section>
+{% else %}
+<section class="panel form-panel"><h2>Cadastre um componente primeiro</h2><p class="muted">É necessário ter um componente ativo para registrar uma entrada.</p><a class="button button-primary button-fit" href="{% url 'estoque:componente_criar' %}">Novo componente</a></section>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'base.html' %}{% load recursos %}
+{% block title %}Ordens de serviço | GESTATI{% endblock %}
+{% block extra_head %}<link rel="stylesheet" href="{% recurso 'css/ordens.css' %}">{% endblock %}
+{% block content %}
+{% include 'includes/module_context.html' with grupo="ATENDIMENTOS" %}
+<header class="page-header"><div><h1>Ordens de serviço</h1><p class="muted">Acompanhe os atendimentos e consulte o histórico das OS.</p></div><a class="button button-primary button-fit" href="{% url 'ordens:selecionar_ativo' %}">+ Abrir OS</a></header>
+<section class="panel data-panel" aria-label="Consulta e histórico de OS">
+    <form method="get" class="filters stock-filters">{{ filtro.non_field_errors }}{% for field in filtro %}<div class="field {% if field.name == 'q' %}filter-search{% endif %}"><label for="{{ field.id_for_label }}">{{ field.label }}</label>{{ field }}{{ field.errors }}</div>{% endfor %}<div class="filter-actions"><button class="button button-secondary" type="submit">Buscar</button><a href="{% url 'ordens:listar' %}">Limpar</a></div></form>
+    <div class="list-summary">{{ page_obj.paginator.count }} OS encontrada{{ page_obj.paginator.count|pluralize:"s" }} · As encerradas permanecem disponíveis nesta consulta.</div>
+    <div class="table-wrap"><table class="data-table"><caption class="sr-only">Ordens de serviço e etapas do atendimento</caption><thead><tr><th scope="col">OS / equipamento</th><th scope="col">Identificação</th><th scope="col">Departamento</th><th scope="col">Etapa / resultado</th><th scope="col">Abertura</th></tr></thead><tbody>{% for ordem in page_obj %}<tr><th scope="row"><a class="record-name" href="{% url 'ordens:detalhar' ordem.pk %}">OS {{ ordem.pk }} · {{ ordem.nome_ativo }}</a></th><td>{{ ordem.dti_ativo }}<span class="contact-line muted">Patrimônio {{ ordem.patrimonio_ativo|default:"não informado" }}</span></td><td>{{ ordem.nome_departamento }}</td><td>{% include 'ordens/_etapa.html' %}</td><td>{{ ordem.aberto_em|date:"d/m/Y H:i" }}<span class="contact-line muted">{{ ordem.nome_tecnico_abertura }}</span></td></tr>{% empty %}<tr><td colspan="5" class="empty-state"><strong>Nenhuma OS encontrada.</strong><p>Revise os filtros ou abra uma OS para um ativo cadastrado.</p></td></tr>{% endfor %}</tbody></table></div>
+    {% include 'estoque/_paginacao.html' %}
+</section>
+{% endblock %}

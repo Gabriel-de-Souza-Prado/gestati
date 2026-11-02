@@ -1,0 +1,1 @@
+<span class="os-status-group"><span class="status-pill {% if ordem.status == 'encerrada' %}{% if ordem.resultado == 'sem_reparo' %}status-danger{% else %}status-inactive{% endif %}{% else %}status-active{% endif %}">{{ ordem.get_status_display }}</span>{% if ordem.resultado %}<span class="os-result">{{ ordem.get_resultado_display }}</span>{% endif %}</span>

@@ -1,0 +1,5 @@
+<div class="extra-row" data-row>
+    {% include 'ativos/_campo.html' with field=linha.campo %}
+    {% include 'ativos/_campo.html' with field=linha.valor %}
+    <div class="delete-row">{{ linha.DELETE }}<label for="{{ linha.DELETE.id_for_label }}">Remover linha</label></div>
+</div>

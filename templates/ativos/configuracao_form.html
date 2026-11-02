@@ -1,0 +1,15 @@
+{% extends 'base.html' %}{% load static recursos %}
+{% block title %}Alterar configuração · {{ ativo.dti }} | GESTATI{% endblock %}
+{% block extra_head %}<link rel="stylesheet" href="{% recurso 'css/ativos.css' %}"><link rel="stylesheet" href="{% recurso 'css/ordens.css' %}">{% endblock %}
+{% block content %}
+<a class="back-link" href="{% url 'ativos:ativo_detalhar' ativo.pk %}">← Voltar</a>
+<header class="page-header"><div><p class="eyebrow">Identificação {{ ativo.dti }}</p><h1>Alterar configuração</h1><p>{{ ativo.descricao }} · {{ ativo.departamento.nome_exibicao }}</p></div></header>
+<section class="panel asset-section"><h2>Configuração atual</h2>{% for linha in instalados %}<p>{{ linha.quantidade }} × {{ linha.componente.nome }}</p>{% empty %}<p>Sem componentes cadastrados.</p>{% endfor %}</section>
+<section class="panel asset-section"><h2>Nome na rede e sistema operacional</h2><form method="post">{% csrf_token %}<input type="hidden" name="acao" value="dados"><input type="hidden" name="versao_dados" value="{{ versao_dados }}">{{ dados_form.non_field_errors }}<div class="asset-grid">{% for field in dados_form %}{% include 'ativos/_campo.html' %}{% endfor %}</div><div class="form-actions"><button class="button button-primary button-fit" type="submit">Salvar dados</button><a class="button button-cancel" href="{% url 'ativos:ativo_detalhar' ativo.pk %}">Cancelar</a></div></form></section>
+<form method="post" class="panel" id="configuracao-form">{% csrf_token %}{{ form.non_field_errors }}{{ form.versao }}{{ form.chave_confirmacao }}{{ form.versao.errors }}{{ form.chave_confirmacao.errors }}
+{% include 'ativos/_campo.html' with field=form.tipo %}{% include 'ativos/_campo.html' with field=form.justificativa %}
+<fieldset id="correcao-fields" hidden disabled><legend>Corrigir informação cadastrada</legend><p class="help-text">Selecione o lançamento incorreto. Confira os ajustes de estoque antes de confirmar.</p>{% include 'ativos/_campo.html' with field=form.intervencao %}{% include 'ativos/_campo.html' with field=form.componente %}{% include 'ativos/_campo.html' with field=form.quantidade %}</fieldset>
+<fieldset id="fisica-fields"><legend>Instalações e retiradas realizadas fisicamente</legend><p class="help-text">Informe as peças instaladas e retiradas.</p>{{ pecas.management_form }}{{ pecas.non_form_errors }}<div id="os-pecas">{% for linha in pecas %}{% include 'ordens/_peca.html' %}{% endfor %}</div><template id="os-peca-vazia">{% include 'ordens/_peca.html' with linha=pecas.empty_form %}</template><button type="button" class="button button-secondary" id="os-adicionar-peca">+ Adicionar peça</button></fieldset>
+<div class="form-actions"><button type="submit" class="button button-primary">Confirmar</button><a href="{% url 'ativos:ativo_detalhar' ativo.pk %}" class="button button-cancel">Cancelar</a></div></form>
+{% endblock %}
+{% block scripts %}<script src="{% recurso 'js/ordens.js' %}" defer></script><script src="{% recurso 'js/configuracao.js' %}" defer></script>{% endblock %}

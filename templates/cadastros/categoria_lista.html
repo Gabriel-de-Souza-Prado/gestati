@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block title %}Categorias | GESTATI{% endblock %}
+{% block content %}
+{% include 'includes/module_context.html' with grupo="CADASTROS" %}
+<header class="page-header">
+    <div><h1>Categorias de equipamentos</h1><p class="muted">Organize os tipos de equipamentos acompanhados pela TI.</p></div>
+    <a class="button button-primary button-fit" href="{% url 'cadastros:categoria_criar' %}">+ Nova categoria</a>
+</header>
+{% if not tem_categorias %}
+<section class="panel starter-panel" aria-labelledby="categorias-iniciais">
+    <div><h2 id="categorias-iniciais">Comece pelas categorias mais usadas</h2><p class="muted">Adicione Computador, Notebook, Monitor, Nobreak e Switch. Você pode editar esses nomes ou cadastrar outras categorias.</p></div>
+    <form method="post" action="{% url 'cadastros:categoria_iniciais' %}">{% csrf_token %}<button class="button button-secondary" type="submit">Adicionar categorias iniciais</button></form>
+</section>
+{% endif %}
+<section class="panel data-panel" aria-label="Consulta de categorias">
+    <form class="filters" method="get">
+        {% for field in filtro %}
+        <div class="field {% if field.name == 'q' %}filter-search{% endif %}">
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>{{ field }}
+            {% if field.errors %}<div class="form-errors" role="alert">{{ field.errors }}</div>{% endif %}
+        </div>
+        {% endfor %}
+        <div class="filter-actions"><button class="button button-secondary" type="submit">Buscar</button><a href="{% url 'cadastros:categoria_listar' %}">Limpar</a></div>
+    </form>
+    <div class="list-summary"><strong>{{ page_obj.paginator.count }}</strong> categoria{{ page_obj.paginator.count|pluralize:"s" }} encontrada{{ page_obj.paginator.count|pluralize:"s" }}</div>
+    <div class="table-wrap">
+        <table class="data-table">
+            <caption class="sr-only">Categorias cadastradas e ações disponíveis</caption>
+            <thead><tr><th scope="col">Categoria</th><th scope="col">Situação</th><th scope="col" class="actions-heading">Ações</th></tr></thead>
+            <tbody>
+            {% for categoria in page_obj %}
+            <tr>
+                <th scope="row"><a class="record-name" href="{% url 'cadastros:categoria_editar' categoria.pk %}">{{ categoria.nome }}</a><span class="contact-line muted">{% if categoria.perfil_configuracao == 'computador' or categoria.perfil_configuracao == 'notebook' %}Cadastro de {{ categoria.get_perfil_configuracao_display|lower }}{% else %}Dados básicos{% endif %}</span></th>
+                <td><span class="status-pill {% if categoria.ativo %}status-active{% else %}status-inactive{% endif %}">{% if categoria.ativo %}Ativa{% else %}Inativa{% endif %}</span></td>
+                <td><div class="row-actions">
+                    <a href="{% url 'cadastros:categoria_editar' categoria.pk %}">Editar<span class="sr-only"> {{ categoria.nome }}</span></a>
+                    <form method="post" action="{% url 'cadastros:categoria_situacao' categoria.pk %}">
+                        {% csrf_token %}<input type="hidden" name="ativo" value="{% if categoria.ativo %}0{% else %}1{% endif %}">
+                        <button class="text-button" type="submit">{% if categoria.ativo %}Inativar{% else %}Ativar{% endif %}<span class="sr-only"> {{ categoria.nome }}</span></button>
+                    </form>
+                    <a class="danger-link" href="{% url 'cadastros:categoria_excluir' categoria.pk %}">Excluir<span class="sr-only"> {{ categoria.nome }}</span></a>
+                </div></td>
+            </tr>
+            {% empty %}
+            <tr><td class="empty-state" colspan="3"><strong>Nenhuma categoria encontrada.</strong><p>Revise os filtros ou cadastre uma nova categoria.</p></td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% include 'estoque/_paginacao.html' %}
+</section>
+{% endblock %}

@@ -1,0 +1,28 @@
+.asset-section { margin-bottom: 24px; }
+.asset-header-actions{display:grid;grid-template-columns:1fr;width:280px;max-width:100%;flex-shrink:0;gap:12px}.asset-header-actions>.button{width:100%}
+.warranty-period{grid-column:1/-1;border:0;padding:0;margin:0;min-width:0}.warranty-period>legend{font-size:16px;font-weight:650;margin:0 0 16px}
+.asset-section h2 { font-size: 23px; }
+.asset-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 28px; }
+.profile-fields, #extras-section { border: 0; padding: 0; margin: 20px 0 0; min-width: 0; }
+.profile-fields legend, #extras-section legend { font-size: 16px; font-weight: 650; margin-bottom: 16px; }
+[hidden] { display: none !important; }
+.composition-row { display: grid; grid-template-columns: minmax(180px, 2fr) minmax(95px, .6fr) minmax(180px, 1.4fr); gap: 12px 20px; padding: 20px 0; border-bottom: 1px solid var(--line); }
+.composition-row .field, .extra-row .field { min-width: 0; margin-bottom: 0; }
+.extra-row { display: grid; grid-template-columns: 1fr 2fr; gap: 12px 20px; margin-bottom: 22px; }
+.delete-row { grid-column: 1 / -1; display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); }
+.composition-row:last-child { margin-bottom: 24px; }
+.ram-preview { color: var(--teal); font-size: 19px; font-weight: 650; }
+.asset-facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; margin: 24px 0 0; }
+.asset-facts dt { color: var(--muted); font-size: 13px; }
+.asset-facts dd { margin: 4px 0 0; font-weight: 600; overflow-wrap: anywhere; }
+@media (max-width: 850px) { .composition-row { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } .composition-row .field:first-of-type { grid-column: 1 / -1; } }
+@media (max-width: 600px) { .asset-grid, .asset-facts, .composition-row, .extra-row { grid-template-columns: minmax(0, 1fr); } .asset-facts { gap: 18px; } .composition-row .field:first-of-type { grid-column: auto; } }
+
+.composition-group, .config-history { border-top: 1px solid var(--line); margin-top: 24px; padding-top: 20px; }
+.quick-spec { padding: 20px; background: #f0f6f5; border-radius: 10px; margin-bottom: 24px; }
+.quick-spec summary { cursor: pointer; font-weight: 600; }
+.config-preview { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+@media (max-width: 760px) { .config-preview { grid-template-columns: 1fr; } }
+
+.page-header > div { min-width: 0; overflow-wrap: anywhere; }
+.asset-section, .config-history, .config-preview { overflow-wrap: anywhere; }

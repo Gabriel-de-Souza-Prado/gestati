@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% block title %}Devolver empréstimo | GESTATI{% endblock %}
+{% block page_class %}operation-page{% endblock %}
+{% block content %}
+<a class="back-link" href="{% url 'movimentacoes:detalhar' 'emprestimos' emprestimo.pk %}">← Voltar</a><header class="page-header"><div><p class="eyebrow">Identificação {{ emprestimo.dti_ativo }}</p><h1>Registrar devolução</h1><p>{{ emprestimo.descricao_ativo }} · {{ emprestimo.nome_destino }}</p></div></header>
+<p class="notice">O nome de quem devolve pode ser diferente de {{ emprestimo.recebido_por }}. O técnico que recebe e a data serão registrados automaticamente. O vínculo do equipamento permanece no departamento de origem.</p>
+<form method="post" class="panel form-panel">{% csrf_token %}{{ form.non_field_errors }}{% for field in form %}{% if field.is_hidden %}{{ field }}{{ field.errors }}{% else %}<div class="field"><label for="{{ field.id_for_label }}">{{ field.label }}</label>{{ field }}{{ field.errors }}</div>{% endif %}{% endfor %}<div class="form-actions"><button type="submit" class="button button-primary">Confirmar devolução</button><a href="{% url 'movimentacoes:detalhar' 'emprestimos' emprestimo.pk %}" class="button button-cancel">Cancelar</a></div></form>
+{% endblock %}

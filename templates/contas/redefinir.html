@@ -1,0 +1,8 @@
+{% extends 'base.html' %}{% load static recursos %}
+{% block title %}Redefinir senha | GESTATI{% endblock %}
+{% block extra_head %}<link rel="stylesheet" href="{% recurso 'css/auth.css' %}">{% endblock %}
+{% block content %}
+<header class="page-header"><div><p class="eyebrow">ADMINISTRAÇÃO · USUÁRIOS</p><h1>Redefinir senha</h1><p>{{ pessoa.get_full_name|default:pessoa.username }} · {{ pessoa.username }}</p></div></header>
+<section class="panel form-panel"><p class="notice notice-warning">A senha anterior deixará de funcionar. A pessoa deverá trocar a nova senha temporária ao entrar novamente.</p><form method="post">{% csrf_token %}{{ form.versao }}{% if form.non_field_errors %}<div class="form-errors" role="alert">{{ form.non_field_errors }}</div>{% endif %}{% for field in form.visible_fields %}{% include 'contas/campo_senha.html' %}{% endfor %}<div class="form-actions"><button type="submit" class="button button-primary button-fit">Confirmar nova senha temporária</button><a href="{% url 'contas:listar' %}" class="button button-cancel">Cancelar</a></div></form></section>
+{% endblock %}
+{% block scripts %}<script src="{% recurso 'js/passwords.js' %}" defer></script>{% endblock %}

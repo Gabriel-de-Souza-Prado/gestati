@@ -1,0 +1,25 @@
+{% load static recursos %}
+<!doctype html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}GESTATI{% endblock %}</title>
+    <link rel="stylesheet" href="{% recurso 'css/app.css' %}">
+    <link rel="stylesheet" href="{% recurso 'css/cadastros.css' %}">
+    <link rel="stylesheet" href="{% recurso 'css/navigation.css' %}">
+    {% block extra_head %}{% endblock %}
+</head>
+<body class="{% block body_class %}{% endblock %}">
+    <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
+    {% include 'includes/navigation.html' %}
+    <main id="conteudo" class="page {% block page_class %}{% endblock %}">
+        {% if messages %}
+        <div aria-live="polite">{% for message in messages %}<p class="notice notice-{{ message.tags }}">{{ message }}</p>{% endfor %}</div>
+        {% endif %}
+        {% block content %}{% endblock %}
+    </main>
+    {% if user.is_authenticated %}<script src="{% recurso 'js/navigation.js' %}" defer></script><script src="{% recurso 'js/formsets.js' %}" defer></script>{% endif %}
+    {% block scripts %}{% endblock %}
+</body>
+</html>

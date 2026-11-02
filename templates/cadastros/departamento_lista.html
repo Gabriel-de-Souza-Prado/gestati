@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block title %}Departamentos | GESTATI{% endblock %}
+{% block content %}
+{% include 'includes/module_context.html' with grupo="CADASTROS" %}
+<header class="page-header">
+    <div><h1>Departamentos</h1><p class="muted">Organize os setores de vínculo dos equipamentos.</p></div>
+    <a class="button button-primary button-fit" href="{% url 'cadastros:departamento_criar' %}">+ Novo departamento</a>
+</header>
+<section class="panel data-panel" aria-label="Consulta de departamentos">
+    <form class="filters" method="get">
+        {% for field in filtro %}
+        <div class="field {% if field.name == 'q' %}filter-search{% endif %}">
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>{{ field }}
+            {% if field.errors %}<div class="form-errors" role="alert">{{ field.errors }}</div>{% endif %}
+        </div>
+        {% endfor %}
+        <div class="filter-actions"><button class="button button-secondary" type="submit">Buscar</button><a href="{% url 'cadastros:departamento_listar' %}">Limpar</a></div>
+    </form>
+    <div class="list-summary"><strong>{{ page_obj.paginator.count }}</strong> departamento{{ page_obj.paginator.count|pluralize:"s" }} encontrado{{ page_obj.paginator.count|pluralize:"s" }}</div>
+    <div class="table-wrap">
+        <table class="data-table">
+            <caption class="sr-only">Departamentos cadastrados e ações disponíveis</caption>
+            <thead><tr><th scope="col">Departamento</th><th scope="col">Sigla</th><th scope="col">Situação</th><th scope="col" class="actions-heading">Ações</th></tr></thead>
+            <tbody>
+            {% for departamento in page_obj %}
+            <tr>
+                <th scope="row"><a class="record-name" href="{% url 'cadastros:departamento_editar' departamento.pk %}">{{ departamento.nome }}</a></th>
+                <td>{{ departamento.sigla|default:"—" }}</td>
+                <td><span class="status-pill {% if departamento.ativo %}status-active{% else %}status-inactive{% endif %}">{% if departamento.ativo %}Ativo{% else %}Inativo{% endif %}</span></td>
+                <td><div class="row-actions">
+                    <a href="{% url 'cadastros:departamento_editar' departamento.pk %}">Editar<span class="sr-only"> {{ departamento.nome }}</span></a>
+                    <form method="post" action="{% url 'cadastros:departamento_situacao' departamento.pk %}">
+                        {% csrf_token %}<input type="hidden" name="ativo" value="{% if departamento.ativo %}0{% else %}1{% endif %}">
+                        <button class="text-button" type="submit">{% if departamento.ativo %}Inativar{% else %}Ativar{% endif %}<span class="sr-only"> {{ departamento.nome }}</span></button>
+                    </form>
+                    <a class="danger-link" href="{% url 'cadastros:departamento_excluir' departamento.pk %}">Excluir<span class="sr-only"> {{ departamento.nome }}</span></a>
+                </div></td>
+            </tr>
+            {% empty %}
+            <tr><td class="empty-state" colspan="4"><strong>Nenhum departamento encontrado.</strong><p>Revise os filtros ou cadastre um novo departamento.</p></td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% include 'estoque/_paginacao.html' %}
+</section>
+{% endblock %}

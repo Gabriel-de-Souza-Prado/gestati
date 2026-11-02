@@ -1,0 +1,53 @@
+{% extends 'base.html' %}{% load static recursos %}
+{% block title %}Início | GESTATI{% endblock %}
+{% block extra_head %}<link rel="stylesheet" href="{% recurso 'css/dashboard.css' %}">{% endblock %}
+{% block page_class %}dashboard-page{% endblock %}
+{% block content %}
+<h1 class="dashboard-title">Início</h1>
+<section class="dashboard-pending" aria-labelledby="pendencias-title">
+  <h2 id="pendencias-title">Acompanhar pendências</h2>
+  <div class="dashboard-pending-grid">
+    <a class="dashboard-metric" href="{% url 'ordens:listar' %}?status=abertas" title="Todas as OS não encerradas, incluindo as que aguardam coleta ou peça"><strong>{{ pendencias.os_abertas }}</strong><span>OS em aberto</span></a>
+    <a class="dashboard-metric" href="{% url 'ordens:listar' %}?status=aguardando_coleta"><strong>{{ pendencias.aguardando_coleta }}</strong><span>Aguardando coleta</span></a>
+    <a class="dashboard-metric" href="{% url 'ordens:listar' %}?status=aguardando_peca"><strong>{{ pendencias.aguardando_peca }}</strong><span>Aguardando peça</span></a>
+    <a class="dashboard-metric" href="{% url 'movimentacoes:listar' %}?tipo=emprestimos&amp;situacao=abertos"><strong>{{ pendencias.emprestimos_abertos }}</strong><span>Empréstimos em aberto</span></a>
+    <a class="dashboard-metric" href="{% url 'relatorios:consultar' 'estoque' %}?baixo=on"><strong>{{ pendencias.estoque_baixo }}</strong><span>Componentes com estoque baixo</span></a>
+  </div>
+</section>
+<div class="dashboard-families">
+<section class="module-family family-equipment" aria-labelledby="family-equipment">
+  <h2 id="family-equipment">Equipamentos</h2>
+  <div class="module-family-links">
+    <a class="module-link" href="{% url 'ativos:ativo_listar' %}"><span class="module-link__icon">{% include 'includes/module_icon.html' with icon='computer' %}</span><span class="module-link__text"><strong>Ativos</strong><small>Identificação e configuração</small></span><span class="module-link__arrow" aria-hidden="true">→</span></a>
+    <a class="module-link" href="{% url 'movimentacoes:listar' %}"><span class="module-link__icon">{% include 'includes/module_icon.html' with icon='transfer' %}</span><span class="module-link__text"><strong>Movimentações</strong><small>Transferências e empréstimos</small></span><span class="module-link__arrow" aria-hidden="true">→</span></a>
+    <a class="module-link" href="{% url 'baixas:listar' %}"><span class="module-link__icon">{% include 'includes/module_icon.html' with icon='archive' %}</span><span class="module-link__text"><strong>Baixas</strong><small>Retirada de uso e recuperação</small></span><span class="module-link__arrow" aria-hidden="true">→</span></a>
+  </div>
+</section>
+<section class="module-family family-service" aria-labelledby="family-service">
+  <h2 id="family-service">Atendimentos</h2>
+  <div class="module-family-links">
+    <a class="module-link" href="{% url 'ordens:listar' %}"><span class="module-link__icon">{% include 'includes/module_icon.html' with icon='service' %}</span><span class="module-link__text"><strong>Ordens de serviço</strong><small>Manutenções e serviços</small></span><span class="module-link__arrow" aria-hidden="true">→</span></a>
+  </div>
+</section>
+<section class="module-family family-stock" aria-labelledby="family-stock">
+  <h2 id="family-stock">Estoque</h2>
+  <div class="module-family-links">
+    <a class="module-link" href="{% url 'estoque:componente_listar' %}"><span class="module-link__icon">{% include 'includes/module_icon.html' with icon='component' %}</span><span class="module-link__text"><strong>Estoque de componentes</strong><small>Peças disponíveis e entradas</small></span><span class="module-link__arrow" aria-hidden="true">→</span></a>
+  </div>
+</section>
+<section class="module-family family-register" aria-labelledby="family-register">
+  <h2 id="family-register">Cadastros</h2>
+  <div class="module-family-links">
+    <a class="module-link" href="{% url 'cadastros:categoria_listar' %}"><span class="module-link__icon">{% include 'includes/module_icon.html' with icon='category' %}</span><span class="module-link__text"><strong>Categorias</strong><small>Tipos de equipamento</small></span><span class="module-link__arrow" aria-hidden="true">→</span></a>
+    <a class="module-link" href="{% url 'cadastros:departamento_listar' %}"><span class="module-link__icon">{% include 'includes/module_icon.html' with icon='department' %}</span><span class="module-link__text"><strong>Departamentos</strong><small>Setores de vínculo</small></span><span class="module-link__arrow" aria-hidden="true">→</span></a>
+    <a class="module-link" href="{% url 'cadastros:fornecedor_listar' %}"><span class="module-link__icon">{% include 'includes/module_icon.html' with icon='supplier' %}</span><span class="module-link__text"><strong>Fornecedores</strong><small>Fornecimento e contatos</small></span><span class="module-link__arrow" aria-hidden="true">→</span></a>
+  </div>
+</section>
+<section class="module-family family-query" aria-labelledby="family-query">
+  <h2 id="family-query">Consultas</h2>
+  <div class="module-family-links">
+    <a class="module-link" href="{% url 'relatorios:inicio' %}"><span class="module-link__icon">{% include 'includes/module_icon.html' with icon='report' %}</span><span class="module-link__text"><strong>Relatórios</strong><small>Gere relatórios em PDF</small></span><span class="module-link__arrow" aria-hidden="true">→</span></a>
+  </div>
+</section>
+</div>
+{% endblock %}
