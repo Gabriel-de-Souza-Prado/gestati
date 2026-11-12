@@ -1,9 +1,14 @@
 {% extends 'base.html' %}{% load static recursos %}
 {% block title %}Início | GESTATI{% endblock %}
 {% block extra_head %}<link rel="stylesheet" href="{% recurso 'css/dashboard.css' %}">{% endblock %}
+{% block body_class %}dashboard-screen{% endblock %}
 {% block page_class %}dashboard-page{% endblock %}
 {% block content %}
-<h1 class="dashboard-title">Início</h1>
+<header class="dashboard-heading">
+  <h1 class="dashboard-title">Início</h1>
+  <p>Gestão de ativos de TI</p>
+</header>
+<div class="dashboard-workspace">
 <section class="dashboard-pending" aria-labelledby="pendencias-title">
   <h2 id="pendencias-title">Acompanhar pendências</h2>
   <div class="dashboard-pending-grid">
@@ -50,4 +55,9 @@
   </div>
 </section>
 </div>
+</div>
+<footer class="dashboard-signature" aria-label="GESTATI — gestão de ativos de TI">
+  <span class="dashboard-wordmark" aria-hidden="true">GESTATI</span>
+  <span class="dashboard-signature-caption" aria-hidden="true">Gestão de ativos de TI</span>
+</footer>
 {% endblock %}

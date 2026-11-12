@@ -199,3 +199,8 @@ Menu da conta→Configurações→Aparência permite Claro/Escuro, salvo neste n
 ## Demonstração no Render —0.38
 
 [HOSPEDAGEM-RENDER.md](HOSPEDAGEM-RENDER.md) registra a demonstração TCC com dados fictícios, limites do Free e passos seguintes. settings_production,render.yaml,build.sh/start.sh,estáticos WhiteNoise,Gunicorn Linux,health e primeira conta preparados/testados localmente;311 testes completos/Blueprint/WSGI aprovados. Sem migração nova ou envio do banco real. Conta Render criada e repositório privado existente Gabriel-de-Souza-Prado/gestati conferido; Git autenticado e versão atual enviada à main com histórico preservado. Demonstração publicada em https://gestati-demo.onrender.com/: login HTTPS e health com banco verificados. Primeiro acesso/troca de senha de Gabriel e validação autenticada remota continuam pendentes. Não usar runserver como comando de produção nem enviar.gestati.local.json. O desenvolvimento local continua usando o comando da seção inicial.
+
+
+## Experimento de interface —0.39
+
+Esta branch `design/inicio-azul-grafite` contém uma proposta de início com azul/grafite, módulos em listas, pendências laterais e marca GESTATI no rodapé. A paleta é compartilhada com o login e as telas internas; Claro/Escuro continuam disponíveis em Configurações. Para avaliar, iniciar o app local com o comando habitual e atualizar a página. Sem dependência/migração nova. A main e o site do Render mantêm o layout anterior até uma decisão de publicação. Check,3 testes core,61 templates, comparação de links/perfis e QA desktop/móvel em prévia sem banco concluídos; não houve nova execução da suíte completa.
