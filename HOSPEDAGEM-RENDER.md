@@ -1,6 +1,6 @@
 # GESTATI no Render — demonstração do TCC
 
-Atualizado em 12/11/2026: conta Render criada por Gabriel usando GitHub e painel conferido. Repositório privado existente identificado: [Gabriel-de-Souza-Prado/gestati](https://github.com/Gabriel-de-Souza-Prado/gestati). Código preparado e verificado localmente; **ainda não publicado no Render**. Autenticação Git concluída e confirmada por fetch; histórico remoto integrado preservando os arquivos locais. Envio da versão atual em preparação.
+Atualizado em 12/11/2026: conta Render criada por Gabriel usando GitHub e painel conferido. Repositório privado existente identificado: [Gabriel-de-Souza-Prado/gestati](https://github.com/Gabriel-de-Souza-Prado/gestati). Código preparado e verificado localmente; **ainda não publicado no Render**. Autenticação Git concluída e confirmada por fetch; histórico remoto integrado preservando os arquivos locais. Versão atual enviada à main no commit444f409, com histórico anterior preservado. Publicação no Render ainda pendente.
 
 ## Decisões recebidas de Gabriel
 
@@ -54,7 +54,9 @@ Git local inicializado na branch main, sem commit. O remoto origin aponta para o
 
 Gabriel concluiu o login pelo executável Git do runtime do Codex. Fetch autenticado confirmado; main local passou a acompanhar o histórico inicial remoto com reset --mixed, preservando todos os arquivos de trabalho. Não usar reset --hard nem force push. O Git do runtime ainda não está no PATH do PowerShell do usuário. Integrações GitHub/Render não estão instaladas; autenticação Git é independente delas.
 
-Próximo: conferir diff, enviar a versão atual e configurar Blueprint no painel Render. Credenciais da primeira conta devem ser preenchidas pessoalmente no painel, sem envio pelo chat.
+Envio realizado: commit444f409,78 arquivos, sem segredos/banco/evidências/referências. Regras remotas anteriores de.gitignore/.gitattributes preservadas, acrescentando guia hospedagem e LF de scripts.61 templates compilados após limpeza de espaços em branco;311 testes completos continuam sendo da preparação anterior.
+
+Próximo: Gabriel confirmar Install na aba GitHub Installing Render, preparada com Only select repositories e somente Gabriel-de-Souza-Prado/gestati selecionado. Isso concede ao app Render leitura de código/metadados e as permissões de integração listadas pelo GitHub nesse repositório. A confirmação ainda não foi feita pelo agente. O painel Render inicialmente listou apenas outro vínculo GitHub; não selecionar aquele projeto. Depois da instalação, voltar à seleção Blueprint e conectar gestati/main/render.yaml. Credenciais da primeira conta devem ser preenchidas pessoalmente no painel, sem envio pelo chat.
 
 ## Etapas seguintes, após conta e repositório
 
