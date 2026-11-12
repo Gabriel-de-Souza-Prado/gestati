@@ -18,3 +18,24 @@
 @media(max-width:800px){.dashboard-page{width:calc(100% - 32px);margin-top:22px}.dashboard-pending-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.module-family,.family-register,.family-query{grid-column:1/-1}.dashboard-families{gap:12px}.dashboard-metric{padding:12px;min-height:84px}.module-link__icon{width:30px}.family-register .module-family-links{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:560px){.dashboard-pending-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.dashboard-metric:first-child{grid-column:1/-1;flex-direction:row;justify-content:flex-start;gap:14px;min-height:65px}.family-equipment .module-family-links,.family-register .module-family-links{grid-template-columns:1fr}.module-link{padding:12px;min-height:65px}.module-family{padding:15px}.dashboard-title{font-size:22px}}
 @media(prefers-reduced-motion:no-preference){.module-link,.dashboard-metric{transition:background-color .15s,border-color .15s}}
+
+/* Mantém a organização e os nove cartões da versão anterior. */
+.app-shell .dashboard-page{width:calc(100% - 64px);max-width:1600px;margin:28px auto}
+.dashboard-title{font-size:27px;margin-bottom:24px}
+.dashboard-pending-grid{gap:16px;margin-bottom:24px}
+.dashboard-metric{min-height:112px;padding:18px 20px}
+.dashboard-metric strong{font-size:32px}
+.dashboard-metric span{font-size:14px}
+.dashboard-families{gap:18px}
+.module-family{padding:21px 22px 22px}
+.module-family>h2{font-size:12px;margin-bottom:14px}
+.module-family-links{gap:14px}
+.module-link{min-height:104px;padding:18px;gap:14px}
+.module-link strong{font-size:17px}.module-link small{font-size:13px}
+.module-link__icon{width:40px;height:40px}.module-link__icon svg{width:30px;height:30px}
+@media(min-width:1101px) and (max-width:1440px){.family-register{grid-column:span 8}.family-query{grid-column:span 4}.module-link{padding:12px;gap:10px;min-height:88px}.module-link strong{font-size:15px}.module-link small{font-size:12px}.module-link__icon{width:28px}.module-link__icon svg{width:25px;height:25px}.module-family{padding:17px}.dashboard-metric{padding:14px;min-height:96px}.dashboard-metric span{font-size:13px}}
+@media(min-width:1101px) and (max-height:800px){.app-shell .dashboard-page{margin-top:22px;margin-bottom:4px}.dashboard-title{font-size:24px;margin-bottom:18px}.dashboard-metric{min-height:82px;padding:12px 15px}.dashboard-families{gap:14px}.dashboard-pending-grid{margin-bottom:18px}.module-link{min-height:74px;padding:12px;gap:10px}.module-family{padding:15px 18px}.module-family>h2{margin-bottom:11px}.module-link strong{font-size:15px}.module-link small{font-size:12px}}
+@media(max-width:1100px){.app-shell .dashboard-page{width:calc(100% - 32px);margin-top:24px}.dashboard-metric{min-height:92px;padding:14px}.module-family{padding:18px}.module-link{min-height:88px;padding:14px}.module-link strong{font-size:16px}.module-link__icon{width:32px}.dashboard-pending-grid{gap:10px}}
+@media(max-width:560px){.dashboard-title{font-size:24px}.dashboard-metric span{font-size:13px}.dashboard-metric:first-child{min-height:72px}.module-link{min-height:82px}.module-family{padding:16px}.module-family-links{gap:12px}.dashboard-families{gap:14px}}
+
+@media(min-width:1101px) and (max-width:1250px){.family-register .module-family-links{grid-template-columns:repeat(2,minmax(0,1fr))}}

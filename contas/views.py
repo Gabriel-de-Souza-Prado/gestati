@@ -142,4 +142,5 @@ def senha(request):
 @login_required
 @require_http_methods(["GET"])
 def configuracoes(request):
-    return render(request, "contas/configuracoes.html")
+    # Compatibilidade com atalhos antigos; aparência agora está no cabeçalho.
+    return redirect("inicio")

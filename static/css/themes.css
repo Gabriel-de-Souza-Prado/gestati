@@ -1,35 +1,35 @@
 /* Paletas compartilhadas; cores de estado preservam seu significado. */
 :root {
   color-scheme: light;
-  --ink: #173042; --muted: #526675; --teal: #087c72;
-  --line: #dce5e9; --paper: #fff; --bg: #f4f7f8;
-  --field-bg: #fff; --field-border: #a8bac4;
-  --surface-soft: #f1f6f5; --surface-hover: #edf5f4;
-  --primary-bg: #087c72; --primary-hover: #05675f; --primary-ink: #fff;
-  --secondary-bg: #eaf2f1; --secondary-ink: #08685f;
+  --ink: #161616; --muted: #525252; --accent: #0f62fe; --teal: var(--accent);
+  --line: #d5d5d5; --paper: #fff; --bg: #f4f4f4;
+  --field-bg: #fff; --field-border: #8d8d8d;
+  --surface-soft: #f4f4f4; --surface-hover: #e8efff;
+  --primary-bg: #0f62fe; --primary-hover: #0043ce; --primary-ink: #fff;
+  --secondary-bg: #e5eeff; --secondary-ink: #0043ce;
   --error: #a22130; --error-bg: #fff0f2;
   --danger: #9f2d40; --danger-bg: #fff5f5; --danger-border: #c99098; --danger-hover: #fbe8eb;
   --danger-solid: #ad3045; --danger-solid-hover: #90243a;
   --warning-bg: #fff3d9; --warning-ink: #78500a;
   --success-bg: #e6f3ee; --success-ink: #19643d;
   --inactive-bg: #edf0f3; --inactive-ink: #566573;
-  --focus: #e9b44c; --auth-start: #fff; --auth-end: #e5f2eb;
+  --focus: #0f62fe; --auth-start: #fff; --auth-end: #e8efff;
 }
 :root[data-theme="escuro"] {
   color-scheme: dark;
-  --ink: #e7eff2; --muted: #afc1cb; --teal: #72ddc9;
-  --line: #354a55; --paper: #1a282f; --bg: #111b21;
-  --field-bg: #132128; --field-border: #5d7684;
-  --surface-soft: #22353e; --surface-hover: #29433f;
-  --primary-bg: #096b61; --primary-hover: #085b53;
-  --secondary-bg: #243f3c; --secondary-ink: #9ce6d7;
+  --ink: #f4f4f4; --muted: #c6c6c6; --accent: #78a9ff; --teal: var(--accent);
+  --line: #454545; --paper: #202020; --bg: #161616;
+  --field-bg: #262626; --field-border: #8d8d8d;
+  --surface-soft: #2a2a2a; --surface-hover: #293449;
+  --primary-bg: #0f62fe; --primary-hover: #0353e9;
+  --secondary-bg: #25334d; --secondary-ink: #a6c8ff;
   --error: #ffb3c0; --error-bg: #482832;
   --danger: #ffafbd; --danger-bg: #40252d; --danger-border: #92606e; --danger-hover: #542e39;
   --danger-solid: #99354b; --danger-solid-hover: #ac4057;
   --warning-bg: #3d3220; --warning-ink: #f4d18c;
   --success-bg: #203e32; --success-ink: #a3e0bb;
   --inactive-bg: #293942; --inactive-ink: #b8c6cf;
-  --auth-start: #111b21; --auth-end: #18352e;
+  --focus: #78a9ff; --auth-start: #161616; --auth-end: #202c43;
 }
 input { accent-color: var(--primary-bg); }
 input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
@@ -40,19 +40,5 @@ input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 3px
 .filters .form-error-summary { flex-basis: 100%; margin: 0; }
 .filters:has(.form-error-summary) { flex-wrap: wrap; }
 [hidden] { display: none !important; }
-.appearance-panel { max-width: 760px; }
-.appearance-panel h2 { font-size: 23px; }
-.theme-options { border: 0; padding: 0; margin: 26px 0 0; display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 16px; min-width: 0; }
-.theme-options legend { font-size: 14px; font-weight: 650; margin-bottom: 12px; }
-.theme-option { display: flex; align-items: center; gap: 12px; padding: 18px; border: 1px solid var(--field-border); border-radius: 12px; background: var(--field-bg); cursor: pointer; min-width: 0; }
-.theme-option:has(input:checked) { border-color: var(--teal); box-shadow: inset 0 0 0 1px var(--teal); }
-.theme-option input { width: 18px; height: 18px; margin: 0; flex: none; }
-.theme-option strong,.theme-option small { display: block; }
-.theme-option small { color: var(--muted); font-size: 12px; margin-top: 3px; }
-.theme-swatch { width: 42px; height: 48px; border-radius: 6px; border: 1px solid var(--line); border-top: 10px solid #087c72; flex: none; }
-.theme-swatch-light { background: #f4f7f8; }
-.theme-swatch-dark { background: #111b21; }
-@media(max-width:600px) { .theme-options { grid-template-columns: 1fr; } }
-
 .composition-row .form-error-summary,.os-piece-row .form-error-summary { grid-column: 1 / -1; }
 .filters:has(.form-error-summary) .filter-actions { padding-top: 0; }

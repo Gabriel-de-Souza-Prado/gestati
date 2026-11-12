@@ -1,36 +1,23 @@
 {% load static recursos %}
 <header class="topbar">
   <div class="brand-area">
-    <a class="brand" href="{% url 'inicio' %}"><img class="brand-symbol" src="{% recurso 'img/gestati-mark.svg' %}" alt="" width="40" height="40">GESTATI</a>
+    <a class="brand" href="{% url 'inicio' %}"><img class="brand-symbol" src="{% recurso 'img/gestati-mark.svg' %}" alt="" width="36" height="36">GESTATI</a>
     {% if user.is_authenticated and not user.deve_trocar_senha %}
-    <button class="navigation-toggle" type="button" aria-controls="primary-navigation" aria-expanded="false">Menu</button>
-    <nav id="primary-navigation" class="primary-nav" aria-label="Navegação principal">
-      <a href="{% url 'inicio' %}" {% if request.resolver_match.url_name == 'inicio' %}aria-current="page"{% endif %}>Início</a>
-      <details class="nav-dropdown {% if request.resolver_match.namespace == 'ativos' or request.resolver_match.namespace == 'movimentacoes' or request.resolver_match.namespace == 'baixas' %}is-current{% endif %}">
-        <summary>Equipamentos</summary><div class="nav-popover">
-          <a href="{% url 'ativos:ativo_listar' %}" {% if request.resolver_match.namespace == 'ativos' %}aria-current="page"{% endif %}>Ativos</a>
-          <a href="{% url 'movimentacoes:listar' %}" {% if request.resolver_match.namespace == 'movimentacoes' %}aria-current="page"{% endif %}>Movimentações</a>
-          <a href="{% url 'baixas:listar' %}" {% if request.resolver_match.namespace == 'baixas' %}aria-current="page"{% endif %}>Baixas</a>
-        </div>
-      </details>
-      <details class="nav-dropdown {% if request.resolver_match.namespace == 'ordens' %}is-current{% endif %}"><summary>Atendimentos</summary><div class="nav-popover"><a href="{% url 'ordens:listar' %}" {% if request.resolver_match.namespace == 'ordens' %}aria-current="page"{% endif %}>Ordens de serviço</a></div></details>
-      <details class="nav-dropdown {% if request.resolver_match.namespace == 'estoque' %}is-current{% endif %}"><summary>Estoque</summary><div class="nav-popover"><a href="{% url 'estoque:componente_listar' %}" {% if request.resolver_match.namespace == 'estoque' %}aria-current="page"{% endif %}>Estoque de componentes</a></div></details>
-      <details class="nav-dropdown {% if request.resolver_match.namespace == 'cadastros' %}is-current{% endif %}"><summary>Cadastros</summary><div class="nav-popover">
-        <a href="{% url 'cadastros:categoria_listar' %}" {% if 'categoria_' in request.resolver_match.url_name %}aria-current="page"{% endif %}>Categorias</a>
-        <a href="{% url 'cadastros:departamento_listar' %}" {% if 'departamento_' in request.resolver_match.url_name %}aria-current="page"{% endif %}>Departamentos</a>
-        <a href="{% url 'cadastros:fornecedor_listar' %}" {% if 'fornecedor_' in request.resolver_match.url_name %}aria-current="page"{% endif %}>Fornecedores</a>
-      </div></details>
-      <details class="nav-dropdown {% if request.resolver_match.namespace == 'relatorios' %}is-current{% endif %}"><summary>Consultas</summary><div class="nav-popover"><a href="{% url 'relatorios:inicio' %}" {% if request.resolver_match.namespace == 'relatorios' %}aria-current="page"{% endif %}>Relatórios</a></div></details>
-    </nav>
+    <button class="navigation-toggle" type="button" aria-label="Abrir navegação" aria-controls="primary-navigation" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg><span>Menu</span></button>
     {% endif %}
   </div>
+  <div class="header-actions">
+    <button type="button" class="theme-toggle" data-theme-toggle aria-label="Ativar modo escuro" title="Ativar modo escuro" aria-pressed="false" hidden>
+      <svg class="theme-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14A8.5 8.5 0 0 1 10 3.5 8.5 8.5 0 1 0 20.5 14Z"/></svg>
+      <svg class="theme-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg>
+    </button>
+    <span id="theme-announcement" class="sr-only" role="status"></span>
   {% if user.is_authenticated %}
   <details class="nav-dropdown account-menu">
     <summary aria-label="Abrir menu da conta" title="Minha conta"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 21v-2a7.5 7.5 0 0 1 15 0v2"/></svg></summary>
     <div class="nav-popover">
       <div class="account-identity"><strong>{{ user.get_full_name|default:user.username }}</strong><span>{{ user.perfil_exibicao }}</span></div>
       {% if not user.deve_trocar_senha %}
-      <a href="{% url 'contas:configuracoes' %}">Configurações</a>
       {% if user.gerencia_usuarios %}<a href="{% url 'contas:listar' %}">Usuários</a>{% endif %}
       <a href="{% url 'contas:senha' %}">Alterar minha senha</a>
       {% if user.is_superuser %}<a href="{% url 'admin:index' %}">Administração técnica</a>{% endif %}
@@ -39,4 +26,25 @@
     </div>
   </details>
   {% endif %}
+  </div>
 </header>
+{% if user.is_authenticated and not user.deve_trocar_senha %}
+<nav id="primary-navigation" class="primary-nav" aria-label="Navegação principal">
+      <a href="{% url 'inicio' %}" {% if request.resolver_match.url_name == 'inicio' %}aria-current="page"{% endif %}><span class="nav-icon">{% include 'includes/module_icon.html' with icon='home' %}</span><span>Início</span></a>
+      <details class="nav-dropdown {% if request.resolver_match.namespace == 'ativos' or request.resolver_match.namespace == 'movimentacoes' or request.resolver_match.namespace == 'baixas' %}is-current{% endif %}">
+        <summary><span class="nav-icon">{% include 'includes/module_icon.html' with icon='computer' %}</span><span>Equipamentos</span></summary><div class="nav-popover">
+          <a href="{% url 'ativos:ativo_listar' %}" {% if request.resolver_match.namespace == 'ativos' %}aria-current="page"{% endif %}>Ativos</a>
+          <a href="{% url 'movimentacoes:listar' %}" {% if request.resolver_match.namespace == 'movimentacoes' %}aria-current="page"{% endif %}>Movimentações</a>
+          <a href="{% url 'baixas:listar' %}" {% if request.resolver_match.namespace == 'baixas' %}aria-current="page"{% endif %}>Baixas</a>
+        </div>
+      </details>
+      <details class="nav-dropdown {% if request.resolver_match.namespace == 'ordens' %}is-current{% endif %}"><summary><span class="nav-icon">{% include 'includes/module_icon.html' with icon='service' %}</span><span>Atendimentos</span></summary><div class="nav-popover"><a href="{% url 'ordens:listar' %}" {% if request.resolver_match.namespace == 'ordens' %}aria-current="page"{% endif %}>Ordens de serviço</a></div></details>
+      <details class="nav-dropdown {% if request.resolver_match.namespace == 'estoque' %}is-current{% endif %}"><summary><span class="nav-icon">{% include 'includes/module_icon.html' with icon='component' %}</span><span>Estoque</span></summary><div class="nav-popover"><a href="{% url 'estoque:componente_listar' %}" {% if request.resolver_match.namespace == 'estoque' %}aria-current="page"{% endif %}>Estoque de componentes</a></div></details>
+      <details class="nav-dropdown {% if request.resolver_match.namespace == 'cadastros' %}is-current{% endif %}"><summary><span class="nav-icon">{% include 'includes/module_icon.html' with icon='category' %}</span><span>Cadastros</span></summary><div class="nav-popover">
+        <a href="{% url 'cadastros:categoria_listar' %}" {% if 'categoria_' in request.resolver_match.url_name %}aria-current="page"{% endif %}>Categorias</a>
+        <a href="{% url 'cadastros:departamento_listar' %}" {% if 'departamento_' in request.resolver_match.url_name %}aria-current="page"{% endif %}>Departamentos</a>
+        <a href="{% url 'cadastros:fornecedor_listar' %}" {% if 'fornecedor_' in request.resolver_match.url_name %}aria-current="page"{% endif %}>Fornecedores</a>
+      </div></details>
+      <details class="nav-dropdown {% if request.resolver_match.namespace == 'relatorios' %}is-current{% endif %}"><summary><span class="nav-icon">{% include 'includes/module_icon.html' with icon='report' %}</span><span>Consultas</span></summary><div class="nav-popover"><a href="{% url 'relatorios:inicio' %}" {% if request.resolver_match.namespace == 'relatorios' %}aria-current="page"{% endif %}>Relatórios</a></div></details>
+    </nav>
+{% endif %}

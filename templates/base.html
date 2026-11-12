@@ -12,7 +12,7 @@
     {% block extra_head %}{% endblock %}
     <link rel="stylesheet" href="{% recurso 'css/themes.css' %}">
 </head>
-<body class="{% block body_class %}{% endblock %}">
+<body class="{% if user.is_authenticated and not user.deve_trocar_senha %}app-shell {% endif %}{% block body_class %}{% endblock %}">
     <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
     {% include 'includes/navigation.html' %}
     <main id="conteudo" class="page {% block page_class %}{% endblock %}">

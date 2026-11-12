@@ -199,3 +199,8 @@ Menu da conta→Configurações→Aparência permite Claro/Escuro, salvo neste n
 ## Demonstração no Render —0.38
 
 [HOSPEDAGEM-RENDER.md](HOSPEDAGEM-RENDER.md) registra a demonstração TCC com dados fictícios, limites do Free e passos seguintes. settings_production,render.yaml,build.sh/start.sh,estáticos WhiteNoise,Gunicorn Linux,health e primeira conta preparados/testados localmente;311 testes completos/Blueprint/WSGI aprovados. Sem migração nova ou envio do banco real. Conta Render criada e repositório privado existente Gabriel-de-Souza-Prado/gestati conferido; Git autenticado e versão atual enviada à main com histórico preservado. Demonstração publicada em https://gestati-demo.onrender.com/: login HTTPS e health com banco verificados. Primeiro acesso/troca de senha de Gabriel e validação autenticada remota continuam pendentes. Não usar runserver como comando de produção nem enviar.gestati.local.json. O desenvolvimento local continua usando o comando da seção inicial.
+
+
+## Proposta de navegação lateral —0.40
+
+Branch local `design/navegacao-lateral`, criada da `main` após rejeição da tentativa anterior. Cartões e agrupamentos originais maiores, navegação à esquerda, Voltar antes do grupo e retorno no cadastro/edição de usuário. Tema pelo botão lua/sol no cabeçalho; URL antiga de Configurações redireciona ao início com proteção mantida. Paleta azul/neutros inspirada em referências primárias, para avaliação.311 testes completos em PostgreSQL isolado,60 templates/check/migrações/JS e QA desktop/celular aprovados. Sem dependência/migração nova. Para avaliar, executar o app local normalmente e recarregar. Esta proposta ainda não foi enviada ao GitHub nem implantada no Render; main preservada.
