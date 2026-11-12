@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}Configurações | GESTATI{% endblock %}
+{% block content %}
+<a class="back-link" href="{% url 'inicio' %}">← Voltar</a>
+<header class="page-header"><div><p class="eyebrow">MINHA CONTA</p><h1>Configurações</h1></div></header>
+<section class="panel appearance-panel" aria-labelledby="appearance-title">
+  <h2 id="appearance-title">Aparência</h2>
+  <p class="muted">Escolha como deseja visualizar o GESTATI neste navegador.</p>
+  <fieldset class="theme-options"><legend>Tema</legend>
+    <label class="theme-option"><input type="radio" name="tema" value="claro" checked><span class="theme-swatch theme-swatch-light" aria-hidden="true"></span><span><strong>Claro</strong><small>Fundo claro e detalhes verdes</small></span></label>
+    <label class="theme-option"><input type="radio" name="tema" value="escuro"><span class="theme-swatch theme-swatch-dark" aria-hidden="true"></span><span><strong>Escuro</strong><small>Fundo escuro e detalhes verdes</small></span></label>
+  </fieldset>
+  <p id="theme-status" class="help-text" role="status">A alteração é aplicada e salva automaticamente neste navegador.</p>
+  <noscript><p class="notice notice-warning">Ative o JavaScript para alterar o tema.</p></noscript>
+</section>
+{% endblock %}

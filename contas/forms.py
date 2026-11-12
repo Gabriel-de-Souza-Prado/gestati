@@ -1,8 +1,23 @@
 from django import forms
-from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
+from django.contrib.admin.forms import AdminAuthenticationForm
 from django.contrib.auth.password_validation import password_validators_help_text_html
 from django.contrib.auth.validators import UnicodeUsernameValidator
 from .models import Usuario
+
+
+class LoginForm(AuthenticationForm):
+    error_messages = {
+        **AuthenticationForm.error_messages,
+        "invalid_login": "Informe um usuário e uma senha corretos. A senha diferencia letras maiúsculas de minúsculas.",
+    }
+
+
+class LoginAdministrativoForm(AdminAuthenticationForm):
+    error_messages = {
+        **AdminAuthenticationForm.error_messages,
+        "invalid_login": "Informe usuário e senha de uma conta com acesso à administração técnica. A senha diferencia letras maiúsculas de minúsculas.",
+    }
 
 
 class DadosUsuarioForm(forms.Form):

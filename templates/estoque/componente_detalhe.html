@@ -17,7 +17,7 @@
 </section>
 <section class="panel data-panel" aria-labelledby="historico-title">
     <div class="list-summary"><h2 id="historico-title" class="section-title">Histórico de movimentações</h2><p class="muted">Entradas, aplicações, retornos e responsáveis registrados para este componente.</p></div>
-    <form class="filters stock-filters" method="get">{% include 'estoque/_campos_form.html' with form=filtro %}<div class="filter-actions"><button class="button button-secondary" type="submit">Filtrar</button><a href="{% url 'estoque:componente_detalhar' componente.pk %}">Limpar</a></div></form>
+    <form class="filters stock-filters" method="get">{% include 'estoque/_campos_form.html' with form=filtro %}{% include 'includes/form_errors.html' with form=filtro %}<div class="filter-actions"><button class="button button-secondary" type="submit">Filtrar</button><a href="{% url 'estoque:componente_detalhar' componente.pk %}">Limpar</a></div></form>
     <div class="list-summary">{{ page_obj.paginator.count }} movimentaç{{ page_obj.paginator.count|pluralize:"ão,ões" }} encontrada{{ page_obj.paginator.count|pluralize:"s" }}</div>
     <div class="table-wrap"><table class="data-table movement-table">
         <caption class="sr-only">Movimentações do componente e dados do recebimento</caption>

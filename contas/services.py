@@ -23,12 +23,15 @@ def _versao(usuario, versao):
 
 
 @sensitive_variables("senha")
-def _senha(usuario, senha):
+def _senha(usuario, senha, campo="senha_temporaria"):
     if not isinstance(senha, str) or len(senha) > 4096:
-        raise ValidationError("Informe uma senha válida, com até 4096 caracteres.")
-    validate_password(senha, user=usuario)
+        raise ValidationError({campo: "Informe uma senha válida, com até 4096 caracteres."})
+    try:
+        validate_password(senha, user=usuario)
+    except ValidationError as erro:
+        raise ValidationError({campo: erro.messages}) from None
     if usuario.check_password(senha):
-        raise ValidationError("Escolha uma senha diferente da atual.")
+        raise ValidationError({campo: "Escolha uma senha diferente da atual."})
 
 
 @sensitive_variables("senha_temporaria")
@@ -116,7 +119,7 @@ def trocar_senha(*, usuario_id, senha_atual, nova_senha):
         raise PermissionDenied("Conta inativa.")
     if not usuario.check_password(senha_atual):
         raise ValidationError({"old_password": "A senha atual não confere. Informe novamente."})
-    _senha(usuario, nova_senha)
+    _senha(usuario, nova_senha, campo="new_password2")
     usuario.set_password(nova_senha)
     usuario.deve_trocar_senha = False
     usuario.versao_acesso += 1

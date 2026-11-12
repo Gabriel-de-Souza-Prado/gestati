@@ -137,3 +137,9 @@ def senha(request):
             messages.success(request, "Senha pessoal definida. Seu acesso está liberado." if obrigatoria else "Senha atualizada.")
             return redirect(destino or "inicio")
     return render(request, "contas/senha.html", {"form": form, "obrigatoria": obrigatoria, "next": destino})
+
+
+@login_required
+@require_http_methods(["GET"])
+def configuracoes(request):
+    return render(request, "contas/configuracoes.html")

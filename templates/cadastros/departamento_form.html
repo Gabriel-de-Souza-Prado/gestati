@@ -4,7 +4,7 @@
 <a class="back-link" href="{% url 'cadastros:departamento_listar' %}">← Voltar</a>
 <header class="page-header"><div><p class="eyebrow">CADASTROS</p><h1>{% if departamento %}Editar{% else %}Novo{% endif %} departamento</h1><p class="muted">Mantenha um único cadastro para cada setor.</p></div></header>
 <section class="panel form-panel" aria-label="Dados do departamento">
-    {% if form.non_field_errors %}<div class="form-errors" role="alert">{{ form.non_field_errors }}</div>{% endif %}
+
     <form method="post">
         {% csrf_token %}
         {% for field in form %}
@@ -15,7 +15,7 @@
             {% if field.errors %}<div class="form-errors" role="alert">{{ field.errors }}</div>{% endif %}
         </div>
         {% endfor %}
-        <div class="form-actions"><button class="button button-primary button-fit" type="submit">{% if departamento %}Salvar alterações{% else %}Cadastrar departamento{% endif %}</button><a href="{% url 'cadastros:departamento_listar' %}" class="button button-cancel">Cancelar</a></div>
+        {% include 'includes/form_errors.html' %}<div class="form-actions"><button class="button button-primary button-fit" type="submit">{% if departamento %}Salvar alterações{% else %}Cadastrar departamento{% endif %}</button><a href="{% url 'cadastros:departamento_listar' %}" class="button button-cancel">Cancelar</a></div>
     </form>
 </section>
 {% endblock %}

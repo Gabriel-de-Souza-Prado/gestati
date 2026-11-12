@@ -14,7 +14,9 @@ def filtrar_ordens(consulta, dados):
                  | Q(serie_ativo__icontains=termo) | Q(nome_ativo__icontains=termo)
                  | Q(ativo__dti__icontains=termo) | Q(ativo__patrimonio__icontains=termo)
                  | Q(ativo__numero_serie__icontains=termo) | Q(modelo_ativo__icontains=termo)
-                 | Q(ativo__modelo__icontains=termo) | Q(ativo__especificacoes__hostname__icontains=termo))
+                 | Q(ativo__modelo__icontains=termo) | Q(ativo__especificacoes__hostname__icontains=termo)
+                 | Q(nome_departamento__icontains=termo) | Q(departamento__nome__icontains=termo)
+                 | Q(departamento__sigla__icontains=termo))
         if termo.isascii() and termo.isdigit() and len(termo) < 19:
             busca |= Q(pk=int(termo))
         consulta = consulta.filter(busca)

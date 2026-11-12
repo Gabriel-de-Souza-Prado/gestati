@@ -5,7 +5,7 @@
 <header class="page-header"><div><p class="eyebrow">ESTOQUE</p><h1>{% if componente %}Editar{% else %}Novo{% endif %} componente</h1></div></header>
 <section class="panel form-panel" aria-label="Dados do componente">
     <form method="post">{% csrf_token %}{% include 'estoque/_campos_form.html' %}
-        <div class="form-actions"><button class="button button-primary button-fit" type="submit">{% if componente %}Salvar alterações{% else %}Cadastrar componente{% endif %}</button><a href="{% url 'estoque:componente_listar' %}" class="button button-cancel">Cancelar</a></div>
+        {% include 'includes/form_errors.html' %}<div class="form-actions"><button class="button button-primary button-fit" type="submit">{% if componente %}Salvar alterações{% else %}Cadastrar componente{% endif %}</button><a href="{% url 'estoque:componente_listar' %}" class="button button-cancel">Cancelar</a></div>
     </form>
 </section>
 {% endblock %}

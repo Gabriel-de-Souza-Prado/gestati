@@ -30,6 +30,7 @@
     <div class="nav-popover">
       <div class="account-identity"><strong>{{ user.get_full_name|default:user.username }}</strong><span>{{ user.perfil_exibicao }}</span></div>
       {% if not user.deve_trocar_senha %}
+      <a href="{% url 'contas:configuracoes' %}">Configurações</a>
       {% if user.gerencia_usuarios %}<a href="{% url 'contas:listar' %}">Usuários</a>{% endif %}
       <a href="{% url 'contas:senha' %}">Alterar minha senha</a>
       {% if user.is_superuser %}<a href="{% url 'admin:index' %}">Administração técnica</a>{% endif %}

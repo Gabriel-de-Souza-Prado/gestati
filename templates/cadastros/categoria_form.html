@@ -4,7 +4,7 @@
 <a class="back-link" href="{% url 'cadastros:categoria_listar' %}">← Voltar</a>
 <header class="page-header"><div><p class="eyebrow">CADASTROS</p><h1>{% if categoria %}Editar{% else %}Nova{% endif %} categoria</h1><p class="muted">Defina o tipo de equipamento que será cadastrado.</p></div></header>
 <section class="panel form-panel" aria-label="Dados da categoria">
-    {% if form.non_field_errors %}<div class="form-errors" role="alert">{{ form.non_field_errors }}</div>{% endif %}
+
     <form method="post">
         {% csrf_token %}
         {% for field in form %}
@@ -15,7 +15,7 @@
             {% if field.errors %}<div class="form-errors" role="alert">{{ field.errors }}</div>{% endif %}
         </div>
         {% endfor %}
-        <div class="form-actions"><button class="button button-primary button-fit" type="submit">{% if categoria %}Salvar alterações{% else %}Cadastrar categoria{% endif %}</button><a href="{% url 'cadastros:categoria_listar' %}" class="button button-cancel">Cancelar</a></div>
+        {% include 'includes/form_errors.html' %}<div class="form-actions"><button class="button button-primary button-fit" type="submit">{% if categoria %}Salvar alterações{% else %}Cadastrar categoria{% endif %}</button><a href="{% url 'cadastros:categoria_listar' %}" class="button button-cancel">Cancelar</a></div>
     </form>
 </section>
 {% endblock %}

@@ -1,7 +1,7 @@
 <div class="composition-row" data-row data-formset-row>
-    {{ linha.non_field_errors }}
+
     {% include 'ativos/_campo.html' with field=linha.componente %}
     {% include 'ativos/_campo.html' with field=linha.quantidade %}
     {% include 'ativos/_campo.html' with field=linha.origem %}
-    <div class="delete-row">{{ linha.DELETE.as_hidden }}<button class="button remove-row-button" type="button" data-remove-row aria-label="Remover linha de componente">Remover linha</button></div>
+    {% include 'includes/form_errors.html' with form=linha %}<div class="delete-row">{{ linha.DELETE.as_hidden }}<button class="button remove-row-button" type="button" data-remove-row aria-label="Remover linha de componente">Remover linha</button></div>
 </div>

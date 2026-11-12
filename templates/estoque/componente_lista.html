@@ -9,7 +9,7 @@
 <section class="panel data-panel" aria-label="Consulta de componentes">
     <form class="filters stock-filters" method="get">
         {% for field in filtro %}<div class="field {% if field.name == 'q' %}filter-search{% endif %}"><label for="{{ field.id_for_label }}">{{ field.label }}</label>{{ field }}{% if field.errors %}<div class="form-errors" role="alert">{{ field.errors }}</div>{% endif %}</div>{% endfor %}
-        <div class="filter-actions"><button class="button button-secondary" type="submit">Buscar</button><a href="{% url 'estoque:componente_listar' %}">Limpar</a></div>
+        {% include 'includes/form_errors.html' with form=filtro %}<div class="filter-actions"><button class="button button-secondary" type="submit">Buscar</button><a href="{% url 'estoque:componente_listar' %}">Limpar</a></div>
     </form>
     <div class="list-summary"><strong>{{ page_obj.paginator.count }}</strong> componente{{ page_obj.paginator.count|pluralize:"s" }} encontrado{{ page_obj.paginator.count|pluralize:"s" }}</div>
     <div class="table-wrap">

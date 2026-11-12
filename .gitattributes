@@ -8,3 +8,6 @@
 *.md text eol=lf
 *.txt text eol=lf
 *.ps1 text eol=crlf
+
+# Scripts de build/início executados no Linux
+*.sh text eol=lf

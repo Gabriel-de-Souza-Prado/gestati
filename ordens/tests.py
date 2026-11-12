@@ -294,6 +294,27 @@ class OrdensTests(TestCase):
         self.assertEqual(list(filtrar_ordens(ordens_para_consulta(), {"q": "987654"})), [ordem])
         self.assertFalse(filtrar_ordens(ordens_para_consulta(), {"q": "1998"}).exists())
 
+    def test_busca_os_por_departamento_nome_sigla_e_nome_historico(self):
+        ordem, _ = self.abrir()
+        for termo in ("saúde", "SMS"):
+            self.assertEqual(list(filtrar_ordens(ordens_para_consulta(), {"q": termo})), [ordem])
+        salvar_departamento(departamento_id=self.departamento.pk, nome="Vigilância Sanitária", sigla="VISA")
+        for termo in ("Saúde", "Vigilância", "visa"):
+            with self.subTest(termo=termo):
+                self.assertEqual(list(filtrar_ordens(ordens_para_consulta(), {"q": termo})), [ordem])
+        ordem.refresh_from_db()
+        self.assertEqual(ordem.nome_departamento, "Saúde")
+
+    def test_departamento_na_busca_respeita_demais_filtros_e_relatorio(self):
+        ordem, _ = self.abrir()
+        self.client.force_login(self.usuario)
+        resposta = self.client.get(reverse("ordens:listar"), {"q": "SMS", "status": "abertas"})
+        self.assertEqual(list(resposta.context["page_obj"]), [ordem])
+        resposta = self.client.get(reverse("ordens:listar"), {"q": "SMS", "status": "encerrada"})
+        self.assertEqual(list(resposta.context["page_obj"]), [])
+        resposta = self.client.get(reverse("relatorios:consultar", args=["ordens"]), {"q": "SMS"})
+        self.assertEqual(resposta.context["page_obj"].paginator.count, 1)
+
     def test_pdf_aberto_e_encerrado_preserva_identificacao_sem_mutacao(self):
         ordem, _ = self.abrir(problema="Falha <fonte> & diagnóstico.\nNão liga.")
         original = gerar_pdf_os(ordem)

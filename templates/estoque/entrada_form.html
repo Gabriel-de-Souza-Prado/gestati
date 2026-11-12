@@ -6,7 +6,7 @@
 {% if tem_componentes %}
 <section class="panel form-panel" aria-label="Dados da entrada">
     <form method="post">{% csrf_token %}{% include 'estoque/_campos_form.html' %}
-        <div class="form-actions"><button class="button button-primary button-fit" type="submit">Confirmar entrada</button><a href="{% url 'estoque:componente_listar' %}" class="button button-cancel">Cancelar</a></div>
+        {% include 'includes/form_errors.html' %}<div class="form-actions"><button class="button button-primary button-fit" type="submit">Confirmar entrada</button><a href="{% url 'estoque:componente_listar' %}" class="button button-cancel">Cancelar</a></div>
     </form>
 </section>
 {% else %}

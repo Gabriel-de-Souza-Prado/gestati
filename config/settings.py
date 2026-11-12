@@ -99,6 +99,11 @@ DATABASES = {
 }
 
 AUTH_USER_MODEL = "contas.Usuario"
+AUTHENTICATION_BACKENDS = [
+    "contas.backends.UsuarioSemDiferencaDeCaixaBackend",
+    # Preserva sessões existentes; novas autenticações passam pelo primeiro.
+    "django.contrib.auth.backends.ModelBackend",
+]
 AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
     {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},

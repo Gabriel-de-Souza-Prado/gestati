@@ -13,7 +13,7 @@
     <p class="eyebrow">ACESSO DA EQUIPE</p>
     <h2 id="login-title">Entre no GESTATI</h2>
     <p class="muted">Informe seu usuário e sua senha para continuar.</p>
-    {% if form.non_field_errors %}<div class="form-errors" role="alert">{{ form.non_field_errors }}</div>{% endif %}
+
     <form method="post" action="{% url 'login' %}">
         {% csrf_token %}
         {% if next %}<input type="hidden" name="next" value="{{ next }}">{% endif %}
@@ -26,6 +26,7 @@
         </div>
         {% endif %}
         {% endfor %}
+        {% include 'includes/form_errors.html' %}
         <button class="button button-primary" type="submit">Entrar</button>
     </form>
     <p class="auth-access-note">Precisa de acesso? Procure o administrador da TI.</p>

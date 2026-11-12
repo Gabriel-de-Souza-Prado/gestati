@@ -20,7 +20,7 @@
             {% if field.errors %}<div class="form-errors" role="alert">{{ field.errors }}</div>{% endif %}
         </div>
         {% endfor %}
-        <div class="filter-actions"><button class="button button-secondary" type="submit">Buscar</button><a href="{% url 'cadastros:categoria_listar' %}">Limpar</a></div>
+        {% include 'includes/form_errors.html' with form=filtro %}<div class="filter-actions"><button class="button button-secondary" type="submit">Buscar</button><a href="{% url 'cadastros:categoria_listar' %}">Limpar</a></div>
     </form>
     <div class="list-summary"><strong>{{ page_obj.paginator.count }}</strong> categoria{{ page_obj.paginator.count|pluralize:"s" }} encontrada{{ page_obj.paginator.count|pluralize:"s" }}</div>
     <div class="table-wrap">
