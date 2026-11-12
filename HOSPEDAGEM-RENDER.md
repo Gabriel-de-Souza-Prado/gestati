@@ -1,6 +1,6 @@
 # GESTATI no Render — demonstração do TCC
 
-Publicado em12/11/2026: **[GESTATI de demonstração](https://gestati-demo.onrender.com/)**. Render Live no commit980cd7c, app Free e banco criado pelo Blueprint. Login HTTPS200 e /health/200/statusok conferidos externamente. Primeiro acesso/troca inicial de Gabriel e testes autenticados/PDF/fluxos remotos ainda pendentes. Próximo: entrar com as credenciais que Gabriel definiu pessoalmente, trocar a senha temporária e depois remover GESTATI_ADMIN_PASSWORD do ambiente. Não enviar senha ao chat. Demais registros abaixo preservam a preparação anterior.
+Atualizado em12/11/2026: **[GESTATI de demonstração](https://gestati-demo.onrender.com/)** com layout0.40 aprovado/publicado. Render Live no commit3163d7d, deploy dep-dbr0und9fdbs73dvt3qg (1min8s). Branch design/navegacao-lateral integrada à main e ambas enviadas ao GitHub. Login HTTPS200, health200/statusok e sete recursos CSS/JS200; lua/sol do login remoto conferido. Logs: nenhuma migração a aplicar e banco já possuía usuários, sem alterar contas/senhas. Demais registros abaixo preservam o histórico; restrição de manter branch somente local foi revogada por Gabriel. Testes completos311 da revisão0.40, sem nova suíte nesta promoção. Validação funcional autenticada/remoção do bootstrap continuam próprias.
 
 ## Decisões recebidas de Gabriel
 
@@ -87,3 +87,10 @@ Atualização12/11/2026 — Gabriel clicou Install e autorização Render/GitHub
 
 
 Atualização12/11/2026 — publicação demonstrativa EFETIVA: https://gestati-demo.onrender.com/. Render Live no commit980cd7c; app Free srv-dbqs5klbedkc73eiudj0, Blueprint exs-dbqs3kbtqb8s73bsdv3g, banco gestati-demo-db. Login HTTPS200 e health200/statusok conferidos externamente. Primeiro acesso/troca inicial de Gabriel e QA autenticada/PDF/fluxos remotos ainda pendentes. Próximo entrar com credenciais definidas pessoalmente no Render, trocar senha, avisar; depois remover GESTATI_ADMIN_PASSWORD do ambiente. Não pedir senha no chat nem ler formulário preenchido/envs sigilosos. Nenhum dado real importado;311 testes da preparação anterior, sem nova suíte nesta etapa. Prova gestati-publicado-login.png na QA. PostgreSQL local de testes continua encerrado.
+
+
+## Publicação do layout0.41
+
+Estado atual0.41 — Gabriel APROVOU o layout0.40 e autorizou integrar/publicar. design/navegacao-lateral3163d7d integrada por fast-forward à main; main e branch enviadas ao GitHub. Main local ativa, tentativa rejeitada0.39 não incorporada. Deploy manual no Render dep-dbr0und9fdbs73dvt3qg confirmado Live/succeeded para3163d7d em12/11/2026. https://gestati-demo.onrender.com/ atualizado. HTTPS/login200, health200/statusok e sete recursos CSS/JS com hash200; botão lua/sol testado no login remoto sem credenciais. Logs confirmaram nenhuma migração a aplicar e nenhuma conta/senha alterada.311 testes completos são os aprovados na revisão0.40; sem novo código/teste de negócio nesta promoção. Documentos posteriores são somente documentação e não exigem redeploy. Branch preservada no GitHub. Próximo Gabriel usar/validar a versão publicada e relatar refinamentos. Aprovação revoga restrições antigas de manter somente local/não enviar. Não reabrir escolha de layout/paleta nem pedir publicação novamente. Requisitos2.13/modelo2.4/plano2.18.
+
+A verificação remota não dependeu de ler variáveis privadas nem acessar o banco pela rede externa. O Blueprint e autoDeployTrigger off foram mantidos; commits posteriores apenas de documentação não exigem nova implantação. Sem dependência/migração/carga de dados nova.
