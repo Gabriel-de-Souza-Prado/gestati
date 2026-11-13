@@ -16,7 +16,7 @@
   <details class="nav-dropdown account-menu">
     <summary aria-label="Abrir menu da conta" title="Minha conta"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 21v-2a7.5 7.5 0 0 1 15 0v2"/></svg></summary>
     <div class="nav-popover">
-      <div class="account-identity"><strong>{{ user.get_full_name|default:user.username }}</strong><span>{{ user.perfil_exibicao }}</span></div>
+      <div class="account-identity"><strong>{{ user.username }}</strong><span>{{ user.perfil_exibicao }}</span></div>
       {% if not user.deve_trocar_senha %}
       {% if user.gerencia_usuarios %}<a href="{% url 'contas:listar' %}">Usuários</a>{% endif %}
       <a href="{% url 'contas:senha' %}">Alterar minha senha</a>
